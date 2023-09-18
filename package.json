@@ -1,0 +1,21 @@
+{
+  "name": "cdm_system",
+  "version": "0.0.1",
+  "description": "Customizable data management system",
+  "main": "./index.ts",
+  "scripts": {
+    "build": "tsc --project tsconfig.json ",
+    "start": "npm run build && node -r tsconfig-paths/register -r ts-node/register ./build/index.js"
+  },
+  "type": "commonjs",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "reflect-metadata": "^0.1.13",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  },
+  "devDependencies": {
+    "tsconfig-paths": "^4.2.0"
+  }
+}
