@@ -1,5 +1,5 @@
 import { Model } from "./Model";
-import { Entity } from "./../decorators/models/entity";
+import { Entity } from "@decorators/models/entity";
 import { Entities } from "@decorators/_types";
 
 @Entity({ entity: Entities.CONTACT })

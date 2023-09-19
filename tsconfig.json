@@ -15,10 +15,10 @@
     "moduleResolution": "node",
     "allowJs": true,
     "paths": {
-      "@decorators/*": ["packages/decorators/*"]
+      "@decorators/*": ["packages/decorators/*"],
+      "@models/*": ["packages/models/*"]
     },
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
-	 
   }
 }

@@ -1,4 +1,4 @@
 node_modules/
 build/
-packages/backend/node_modules
+packages/server/node_modules
 .vscode

@@ -1,14 +1,9 @@
 import "reflect-metadata";
 
-import { Field } from "@decorators/models/field";
-import {
-  ATTRIBUTES_KEY,
-  ENTITY_KEY,
-  MODEL_CONFIG_KEY,
-} from "@decorators/_constants";
-import { FieldType } from "@decorators/_types";
-import { ContactModel } from "packages/models/ContactModel";
 import { ModelConfig } from "@decorators/models/modelConfig";
+import { Field } from "@decorators/models/field";
+import { FieldType } from "@decorators/_types";
+import { ContactModel } from "@models/ContactModel";
 
 @ModelConfig()
 class Book extends ContactModel {

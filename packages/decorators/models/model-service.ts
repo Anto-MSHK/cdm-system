@@ -15,7 +15,7 @@ function setModelName(
 ) {
   Reflect.defineMetadata(
     modelType,
-    options || { modelName: target.constructor.name },
+    options || { modelName: target.constructor.name + "s" },
     target
   );
 }
