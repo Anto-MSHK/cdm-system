@@ -1,9 +1,9 @@
-import { ModelConfig } from "./models/contact";
+import { ModelConfig } from "../_types";
 
 export function annotateModel(
   target: Function,
   modelType: string,
-  options: ModelConfig = {}
+  options: ModelConfig | undefined
 ) {
   setModelName(target.prototype, modelType, options);
 }
@@ -11,11 +11,11 @@ export function annotateModel(
 function setModelName(
   target: Function,
   modelType: string,
-  options: ModelConfig
+  options: ModelConfig | undefined
 ) {
   Reflect.defineMetadata(
     modelType,
-    options.modelName || target.constructor.name,
+    options || { modelName: target.constructor.name },
     target
   );
 }

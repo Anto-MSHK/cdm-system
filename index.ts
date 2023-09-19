@@ -1,20 +1,24 @@
 import "reflect-metadata";
 
-import { ContactModel } from "@decorators/models/contact";
 import { Field } from "@decorators/models/field";
-import { ATTRIBUTES_KEY, CONTACT_MODEL_NAME_KEY } from "@decorators/constants";
+import {
+  ATTRIBUTES_KEY,
+  ENTITY_KEY,
+  MODEL_CONFIG_KEY,
+} from "@decorators/_constants";
+import { FieldType } from "@decorators/_types";
+import { ContactModel } from "packages/models/ContactModel";
+import { ModelConfig } from "@decorators/models/modelConfig";
 
-@ContactModel()
-class Book {
-  @Field({ type: "Anton" })
+@ModelConfig()
+class Book extends ContactModel {
+  @Field({ type: FieldType.STRING })
   name: string | undefined;
-  @Field({ type: "Krut" })
+  @Field({ type: FieldType.STRING })
   ISBN: string | undefined;
 }
 
-let obj = new Book();
+let book = new Book();
 
-const a = Reflect.getMetadata(CONTACT_MODEL_NAME_KEY, obj);
-const b = Reflect.getMetadata(ATTRIBUTES_KEY, obj);
-console.log(a);
-console.log(b);
+console.log(book._getConfig());
+console.log(book._getAllFields());

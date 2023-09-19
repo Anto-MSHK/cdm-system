@@ -1,10 +1,10 @@
-import { ATTRIBUTES_KEY } from "./constants";
-import { FieldConfig } from "./models/field";
+import { ATTRIBUTES_KEY } from "../_constants";
+import { FieldConfig } from "../_types";
 
 export function annotateField(
   target: Object,
   propertyName: string,
-  options: FieldConfig = {}
+  options: FieldConfig
 ) {
   addAttribute(target, propertyName, options);
 }
