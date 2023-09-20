@@ -5,10 +5,11 @@ import {
 } from "@decorators/_constants";
 import { FieldConfig, FieldType, ModelConfig } from "@decorators/_types";
 import { Field } from "@decorators/models/field";
+import { paramsForSequelize } from "packages/configurators/databaseConfigurator/utils/paramsForSequelize";
 
 export class Model {
-  @Field({ type: FieldType.NUMBER })
-  id?: number;
+  @Field({ type: FieldType.UUID })
+  id?: string;
 
   _getConfig(): ModelConfig & { _entity: string } {
     return {
@@ -19,5 +20,9 @@ export class Model {
 
   _getAllFields(): { [key: string]: FieldConfig } {
     return Reflect.getMetadata(ATTRIBUTES_KEY, this);
+  }
+
+  _getSequelizeConfig() {
+    return paramsForSequelize(this);
   }
 }

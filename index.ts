@@ -1,19 +1,17 @@
-import "reflect-metadata";
+import { AppConfigurator } from "@configurators/index";
+import Book from "src/Book";
+import dotenv from "dotenv";
 
-import { ModelConfig } from "@decorators/models/modelConfig";
-import { Field } from "@decorators/models/field";
-import { FieldType } from "@decorators/_types";
-import { ContactModel } from "@models/ContactModel";
+dotenv.config();
 
-@ModelConfig()
-class Book extends ContactModel {
-  @Field({ type: FieldType.STRING })
-  name: string | undefined;
-  @Field({ type: FieldType.STRING })
-  ISBN: string | undefined;
-}
-
-let book = new Book();
-
-console.log(book._getConfig());
-console.log(book._getAllFields());
+AppConfigurator([Book], {
+  serverPort: process.env.SERVER_PORT as any,
+  database: {
+    dialect: "postgres",
+    host: process.env.DB_HOST as any,
+    port: process.env.DB_PORT as any,
+    username: process.env.DB_USER as any,
+    password: process.env.DB_PASS as any,
+    database: process.env.DB_NAME as any,
+  },
+});

@@ -1,9 +1,15 @@
 import { FieldType } from "@decorators/_types";
 import { Model as ModelCDM } from "@models/Model";
 
-import { DataTypes, Model, ModelAttributeColumnOptions } from "sequelize";
+import {
+  DataTypes,
+  Model,
+  ModelAttributeColumnOptions,
+  Sequelize,
+} from "sequelize";
 
 const TYPE_TABLE = {
+  [FieldType.UUID]: DataTypes.UUID,
   [FieldType.STRING]: DataTypes.STRING,
   [FieldType.NUMBER]: DataTypes.NUMBER,
   [FieldType.BOOLEAN]: DataTypes.BOOLEAN,
@@ -14,7 +20,11 @@ interface SequelizeModelParams {
 }
 
 const SPECIAL_CONFIG: SequelizeModelParams = {
-  id: { primaryKey: true, autoIncrement: true },
+  id: {
+    primaryKey: true,
+    allowNull: false,
+    //  defaultValue: Sequelize.fn("uuid_generate_v4"),
+  },
 };
 
 export function paramsForSequelize(

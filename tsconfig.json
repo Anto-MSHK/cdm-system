@@ -16,7 +16,9 @@
     "allowJs": true,
     "paths": {
       "@decorators/*": ["packages/decorators/*"],
-      "@models/*": ["packages/models/*"]
+      "@models/*": ["packages/models/*"],
+      "@configurators/*": ["packages/configurators/*"],
+      "@server/*": ["packages/server/*"]
     },
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
