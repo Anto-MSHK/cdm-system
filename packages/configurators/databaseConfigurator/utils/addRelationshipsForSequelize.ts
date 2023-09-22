@@ -25,7 +25,7 @@ export function addRelationshipsForSequelize(
     if (manyAtModels && manyAtModels.length > 0) {
       manyAtModels.forEach((m) => {
         if (m.model) {
-          const through = `${key}${m.model}s`;
+          const through = `${m.model}${key}s`;
           modelsDB[m.model].belongsToMany(curModelDB, {
             through,
           });
