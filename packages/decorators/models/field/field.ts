@@ -1,4 +1,4 @@
-import { FieldConfig } from "@decorators/_types";
+import { FieldConfig } from "@decorators/models/_types";
 import { annotateField } from "./field-service";
 
 export function Field(params: FieldConfig) {

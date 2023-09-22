@@ -3,6 +3,7 @@ import { AppConfiguratorConfig } from "..";
 import { ModelCtor } from "sequelize-typescript";
 import { DB } from "./_types";
 import { Sequelize } from "sequelize";
+import { addRelationshipsForSequelize } from "./utils/addRelationshipsForSequelize";
 
 export function DatabaseConfigurator(
   models: Model[],
@@ -29,6 +30,8 @@ export function DatabaseConfigurator(
       fields as any
     ) as ModelCtor;
   });
+
+  addRelationshipsForSequelize(db.models, models);
 
   return db;
 }

@@ -1,4 +1,4 @@
-import { ATTRIBUTES_KEY } from "../_constants";
+import { ATTRIBUTES_KEY } from "../../_constants";
 import { FieldConfig } from "../_types";
 
 export function annotateField(

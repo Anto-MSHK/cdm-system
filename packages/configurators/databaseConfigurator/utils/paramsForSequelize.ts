@@ -1,4 +1,4 @@
-import { FieldType } from "@decorators/_types";
+import { FieldType } from "@decorators/models/_types";
 import { Model as ModelCDM } from "@models/Model";
 
 import {
@@ -31,7 +31,9 @@ export function paramsForSequelize(
   model: ModelCDM
 ): [string, SequelizeModelParams] {
   const modelName = model._getConfig().modelName as string;
-  const fields = model._getAllFields();
+  const onlyOneAtRels = model._getAllFields().onlyOneAtModels;
+  const manyAtRels = model._getAllFields().manyAtModels;
+  const fields = model._getAllFields().fields;
   let sequelizeFields: SequelizeModelParams = {};
 
   for (let key in fields) {

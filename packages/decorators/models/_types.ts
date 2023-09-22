@@ -1,3 +1,6 @@
+import { Model } from "@models/Model";
+import { Scope } from "src/Scope";
+
 export enum Entities {
   CONTACT = "contact",
   SUBJECT = "subject",
@@ -32,4 +35,9 @@ export interface FieldConfig {
   required?: boolean;
   unique?: boolean;
   defaultValue?: FieldDefaultValueType[FieldType];
+}
+
+export interface HasOneConfig {
+  model: Scope;
+  linkFieldName?: string;
 }
