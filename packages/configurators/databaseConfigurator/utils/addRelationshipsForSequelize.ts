@@ -18,7 +18,9 @@ export function addRelationshipsForSequelize(
           modelsDB[m.model].hasMany(curModelDB, {
             foreignKey: m.linkFieldName,
           });
-          curModelDB.belongsTo(modelsDB[m.model]);
+          curModelDB.belongsTo(modelsDB[m.model], {
+            foreignKey: m.linkFieldName,
+          });
         } else throw new Error("Сопоставление связей невозможно.");
       });
     }
