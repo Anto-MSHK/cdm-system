@@ -11,8 +11,8 @@ export const GET: MethodType = {
   method: GET_METHOD,
   param: {
     name: "id",
-    validator: typeValidator("param", "id", FieldType.UUID),
-    input: "param",
+    validator: typeValidator("path", "id", FieldType.UUID),
+    input: "path",
   },
 };
 export const CREATE: MethodType = {
@@ -22,15 +22,15 @@ export const UPDATE: MethodType = {
   method: UPDATE_METHOD,
   param: {
     name: "id",
-    validator: typeValidator("param", "id", FieldType.UUID, true),
-    input: "param",
+    validator: typeValidator("path", "id", FieldType.UUID, true),
+    input: "path",
   },
 };
 export const DELETE: MethodType = {
   method: DELETE_METHOD,
   param: {
     name: "id",
-    validator: typeValidator("param", "id", FieldType.UUID, true),
-    input: "param",
+    validator: typeValidator("path", "id", FieldType.UUID, true),
+    input: "path",
   },
 };

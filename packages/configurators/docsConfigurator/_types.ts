@@ -1,46 +1,76 @@
+type SwaggerInfo = {
+  title: string;
+  description: string;
+  version: string;
+};
+
+type SwaggerResponse = {
+  description: string;
+  schema: {
+    $ref: string; // "#/definitions/Todos"
+  };
+};
+
+type SwaggerParam = {
+  name: string;
+  required?: boolean;
+  in: "path" | "query" | "body";
+  type: "string" | "number" | "boolean" | "uuid";
+  description?: string;
+};
+
+type SwaggerMethod = {
+  description?: string;
+  parameters?: SwaggerParam[];
+  responses?: {
+    "200": SwaggerResponse;
+    "400": SwaggerResponse;
+    "404": SwaggerResponse;
+  };
+};
+
+type SwaggerPath = {
+  // /todos/
+  get?: SwaggerMethod;
+  post?: SwaggerMethod;
+  put?: SwaggerMethod;
+  delete?: SwaggerMethod;
+};
+
+type SwaggerDefinitions = {
+  [key: string]: {
+    // (model) Todo
+    type: "object";
+    properties: {
+      [key: string]: {
+        type: "string" | "number" | "boolean";
+        example: string;
+      };
+    };
+  };
+};
 type SwaggerDocsConfig = {
   swagger: "2.0";
-  info: {
-    title: "Todo API";
-    description: "My todo API";
-    version: "1.0.0";
-  };
-  host: "localhost:3000";
-  basePath: "/";
-  schemes: ["http"];
-  paths: {
-    "/todos/": {
-      get: {
-        description: "Get all todos";
-        parameters: [];
-        responses: {
-          "200": {
-            description: "Array of all todos";
-            schema: {
-              $ref: "#/definitions/Todos";
-            };
-          };
-        };
-      };
-    };
-  };
-  definitions: {
-    Todo: {
-      type: "object";
-      properties: {
-        id: {
-          type: "string";
-          example: "1";
-        };
-        text: {
-          type: "string";
-          example: "test";
-        };
-        done: {
-          type: "boolean";
-          example: false;
-        };
-      };
-    };
-  };
+  info: SwaggerInfo;
+  host: string;
+  basePath: string; // "/"
+  schemes?: ("http" | "https")[];
+  paths: { [key: string]: SwaggerPath };
+  definitions?: SwaggerDefinitions;
+};
+
+export interface UserDocsConfig {
+  info: SwaggerInfo;
+  host: string;
+  basePath: string;
+}
+
+export {
+  SwaggerInfo,
+  SwaggerResponse,
+  SwaggerParam,
+  SwaggerMethod,
+  SwaggerPath,
+  SwaggerDefinitions,
+  SwaggerDocsConfig,
 };

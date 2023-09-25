@@ -4,7 +4,7 @@ import { query, body, param, ValidationChain } from "express-validator";
 export const inputType = {
   query,
   body,
-  param,
+  path: param,
 };
 
 const typeValid: {

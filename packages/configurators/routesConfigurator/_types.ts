@@ -6,12 +6,13 @@ import {
   DELETE_METHOD,
 } from "./_constants";
 import { inputType } from "./utils/validator";
+import { FieldConfig } from "@decorators/models/_types";
 
 export type FieldInRoute = {
   name: string;
   validator: ValidationChain;
   input: keyof typeof inputType;
-};
+} & Partial<FieldConfig>;
 
 export type MethodType = {
   method:
@@ -21,4 +22,9 @@ export type MethodType = {
     | typeof DELETE_METHOD;
   param?: FieldInRoute;
   queries?: FieldInRoute[];
+};
+
+export type RouteType = {
+  routeName: string;
+  operations: { [key: string]: FieldInRoute[] };
 };

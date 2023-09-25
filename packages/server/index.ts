@@ -3,7 +3,7 @@ import { DB } from "@configurators/databaseConfigurator/_types";
 import { logger } from "packages/logger";
 import fs from "fs";
 import swaggerUi from "swagger-ui-express";
-import swaggerConfig from "./swagger.json";
+import { DOCS_FILE_PATH } from "@configurators/docsConfigurator/utils/saveConfigToFile";
 interface ServerConfig {
   port: number;
   db: DB;
@@ -19,7 +19,24 @@ export function StartServer(config: ServerConfig) {
       message: `Welcome to API!`,
     });
   });
-  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerConfig));
+
+  let swaggerConfig = undefined;
+  try {
+    if (fs.existsSync(DOCS_FILE_PATH)) {
+      const fileData = fs.readFileSync(DOCS_FILE_PATH, "utf8");
+      try {
+        swaggerConfig = JSON.parse(fileData);
+        if (swaggerConfig) {
+          app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerConfig));
+          logger.info("Docs - Is deployed");
+        } else {
+          logger.warn("Docs - Not deployed");
+        }
+      } catch (parseError) {
+        logger.warn("Docs - The documentation file is corrupted");
+      }
+    }
+  } catch (err) {}
 
   config.db.sequelize
     .sync({ force: true })

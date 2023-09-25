@@ -8,13 +8,10 @@ import {
   UPDATE,
 } from "./_constants";
 import { typeValidator } from "./utils/validator";
-import { FieldInRoute } from "./_types";
+import { FieldInRoute, RouteType } from "./_types";
 
 export function RoutesConfigurator(models: Model[]): any {
-  const routes: {
-    routeName: string;
-    operations: { [key: string]: FieldInRoute[] };
-  }[] = [];
+  const routes: RouteType[] = [];
   models.forEach((model) => {
     const modelConfig = model._getConfig();
     const allFields = model._getAllFields().fields;
