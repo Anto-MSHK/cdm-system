@@ -3,7 +3,7 @@
   "compilerOptions": {
     "target": "ES6",
     "module": "CommonJS",
-
+    "resolveJsonModule": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
     "sourceMap": true,

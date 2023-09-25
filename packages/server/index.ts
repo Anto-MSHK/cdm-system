@@ -1,6 +1,9 @@
 import express, { Application, Request, Response } from "express";
 import { DB } from "@configurators/databaseConfigurator/_types";
-
+import { logger } from "packages/logger";
+import fs from "fs";
+import swaggerUi from "swagger-ui-express";
+import swaggerConfig from "./swagger.json";
 interface ServerConfig {
   port: number;
   db: DB;
@@ -16,21 +19,24 @@ export function StartServer(config: ServerConfig) {
       message: `Welcome to API!`,
     });
   });
+  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerConfig));
 
   config.db.sequelize
     .sync({ force: true })
     .then(() => {
-      console.log("Synced db.");
+      logger.info("DB launch - completed");
     })
     .catch((err) => {
-      console.log("Failed to sync db: " + err.message);
+      logger.error("DB launch - error");
+      logger.error(err.message);
     });
 
   try {
     app.listen(port, () => {
-      console.log(`Server running on http://localhost:${port}`);
+      logger.info(`Server startup - performed on ${port} port`);
     });
   } catch (error) {
-    console.log(`Error occurred: ${error}`);
+    logger.error("Server startup - error");
+    logger.error(error);
   }
 }

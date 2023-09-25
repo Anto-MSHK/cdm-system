@@ -1,0 +1,46 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Todo API",
+    "description": "My todo API",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": ["http"],
+  "paths": {
+    "/todos/": {
+      "get": {
+        "description": "Get all todos",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Array of all todos",
+            "schema": {
+              "$ref": "#/definitions/Todos"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Todo": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "1"
+        },
+        "text": {
+          "type": "string",
+          "example": "test"
+        },
+        "done": {
+          "type": "boolean",
+          "example": false
+        }
+      }
+    }
+  }
+}
