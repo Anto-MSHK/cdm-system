@@ -1,20 +1,19 @@
 import { ModelConfig } from "@decorators/models/modelConfig/modelConfig";
 import { Field } from "@decorators/models/field/field";
 import { FieldType } from "@decorators/models/_types";
-import { ContactModel } from "@models/ContactModel";
-import { ManyAt } from "@decorators/models/relationships/manyAt";
+import { HasMany } from "@decorators/models/relationships/hasMany";
 import { Scope } from "src/Scope";
-import Client from "./Client";
+import { Model } from "@models/Model";
 
 @ModelConfig()
-class Book extends ContactModel {
+class Book extends Model {
   @Field({ type: FieldType.STRING })
   name: string | undefined;
   @Field({ type: FieldType.STRING })
   ISBN: string | undefined;
 
-  @ManyAt({ model: Scope.Client })
-  client_id: string | undefined;
+  @HasMany({ model: Scope.Client })
+  clients: string | undefined;
 }
 
 export default new Book();

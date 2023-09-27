@@ -1,18 +1,17 @@
 import { ModelConfig } from "@decorators/models/modelConfig/modelConfig";
 import { Field } from "@decorators/models/field/field";
 import { FieldType } from "@decorators/models/_types";
-import { ContactModel } from "@models/ContactModel";
-import { OnlyOneAt } from "@decorators/models/relationships/onlyOneAt";
 import { Scope } from "src/Scope";
-import Book = require("src/Models/Book");
+import { Model } from "@models/Model";
+import { HasOne } from "@decorators/models/relationships/hasOne";
 
 @ModelConfig()
-class Chapter extends ContactModel {
+class Chapter extends Model {
   @Field({ type: FieldType.STRING })
   title: string | undefined;
 
-  @OnlyOneAt({ model: Scope.Book })
-  book_id: string | undefined;
+  @HasOne({ model: Scope.Book })
+  book: string | undefined;
 }
 
 export default new Chapter();

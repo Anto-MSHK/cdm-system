@@ -1,9 +1,9 @@
 import "reflect-metadata";
 
 import { Model } from "@models/Model";
-import { DatabaseConfigurator } from "@configurators/databaseConfigurator";
 import { StartServer } from "@server/index";
 import { logger } from "packages/logger";
+import { DatabaseConfigurator } from "@configurators/databaseConfigurator";
 import { RoutesConfigurator } from "./routesConfigurator";
 import { DocsConfigurator } from "./docsConfigurator";
 
@@ -32,7 +32,7 @@ export async function AppConfigurator(
       version: "0.0.1",
     },
     basePath: "/",
-    host: `localhost:${process.env.SERVER_PORT}`,
+    host: `localhost:${config.serverPort || 3000}`,
   });
   logger.info("DB Data configuration - completed");
   StartServer({ db, port: config.serverPort || 3000 });

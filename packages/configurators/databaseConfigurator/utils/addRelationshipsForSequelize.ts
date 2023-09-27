@@ -9,30 +9,29 @@ export function addRelationshipsForSequelize(
   for (let key in modelsDB) {
     const curModelCDM = modelsCDM.find((m) => m.relation() === key);
     const curModelDB = modelsDB[key];
-    const onlyOneAtModels = curModelCDM?._getAllFields().onlyOneAtModels;
-    const manyAtModels = curModelCDM?._getAllFields().manyAtModels;
+    const hasOneModels = curModelCDM?._getAllFields().hasOneModels;
+    const hasManyModels = curModelCDM?._getAllFields().hasManyModels;
 
-    if (onlyOneAtModels && onlyOneAtModels.length > 0) {
-      onlyOneAtModels.forEach((m) => {
+    if (hasOneModels && hasOneModels.length > 0) {
+      hasOneModels.forEach((m) => {
         if (m.model) {
-          modelsDB[m.model].hasMany(curModelDB, {
-            foreignKey: m.linkFieldName,
+          modelsDB[m.model].hasOne(curModelDB, {
+            foreignKey: m.model.toLocaleLowerCase(),
           });
           curModelDB.belongsTo(modelsDB[m.model], {
-            foreignKey: m.linkFieldName,
+            foreignKey: m.model.toLocaleLowerCase(),
           });
         } else throw new Error("Сопоставление связей невозможно.");
       });
     }
-    if (manyAtModels && manyAtModels.length > 0) {
-      manyAtModels.forEach((m) => {
+    if (hasManyModels && hasManyModels.length > 0) {
+      hasManyModels.forEach((m) => {
         if (m.model) {
-          const through = `${m.model}${key}s`;
-          modelsDB[m.model].belongsToMany(curModelDB, {
-            through,
+          curModelDB.hasMany(modelsDB[m.model], {
+            foreignKey: key.toLowerCase(),
           });
-          curModelDB.belongsToMany(modelsDB[m.model], {
-            through,
+          modelsDB[m.model].belongsTo(curModelDB, {
+            foreignKey: key.toLowerCase(),
           });
         } else throw new Error("Сопоставление связей невозможно.");
       });

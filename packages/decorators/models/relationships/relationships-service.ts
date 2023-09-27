@@ -1,25 +1,25 @@
 import { Model } from "@models/Model";
-import { FOREIGN_KEY, MANY_AT_KEY, ONLY_ONE_AT_KEY } from "../../_constants";
+import { HAS_MANY_KEY, HAS_ONE_KEY } from "../../_constants";
 import { HasOneConfig } from "../_types";
 import { Scope } from "src/Scope";
 
-export function annotateManyAt(
+export function annotateHasMany(
   target: Object,
   propertyName: string,
   options: HasOneConfig
 ) {
-  addRelationshipAttributes(target, options.model, MANY_AT_KEY, {
+  addRelationshipAttributes(target, options.model, HAS_MANY_KEY, {
     ...options,
     linkFieldName: propertyName,
   });
 }
 
-export function annotateOnlyOneAt(
+export function annotateHasOne(
   target: Object,
   propertyName: string,
   options: HasOneConfig
 ) {
-  addRelationshipAttributes(target, options.model, ONLY_ONE_AT_KEY, {
+  addRelationshipAttributes(target, options.model, HAS_ONE_KEY, {
     ...options,
     linkFieldName: propertyName,
   });

@@ -1,9 +1,9 @@
 import {
   ATTRIBUTES_KEY,
   ENTITY_KEY,
-  MANY_AT_KEY,
+  HAS_MANY_KEY,
   MODEL_CONFIG_KEY,
-  ONLY_ONE_AT_KEY,
+  HAS_ONE_KEY,
 } from "@decorators/_constants";
 import { FieldConfig, FieldType, ModelConfig } from "@decorators/models/_types";
 import { Field } from "@decorators/models/field/field";
@@ -11,7 +11,7 @@ import { paramsForSequelize } from "packages/configurators/databaseConfigurator/
 
 type Relation = {
   model: string;
-  relation: typeof MANY_AT_KEY | typeof ONLY_ONE_AT_KEY;
+  relation: typeof HAS_MANY_KEY | typeof HAS_ONE_KEY;
   linkFieldName: string;
 };
 export class Model {
@@ -31,16 +31,16 @@ export class Model {
 
   _getAllFields(): {
     fields: { [key: string]: FieldConfig };
-    onlyOneAtModels: Relation[];
-    manyAtModels: Relation[];
+    hasOneModels: Relation[];
+    hasManyModels: Relation[];
   } {
     const attributes = Reflect.getMetadata(ATTRIBUTES_KEY, this);
-    const onlyOneAtModels = Reflect.getMetadata(ONLY_ONE_AT_KEY, this);
-    const manyAtModels = Reflect.getMetadata(MANY_AT_KEY, this);
+    const hasOneModels = Reflect.getMetadata(HAS_ONE_KEY, this);
+    const hasManyModels = Reflect.getMetadata(HAS_MANY_KEY, this);
     return {
       fields: attributes,
-      onlyOneAtModels: onlyOneAtModels || undefined,
-      manyAtModels: manyAtModels || undefined,
+      hasOneModels: hasOneModels || undefined,
+      hasManyModels: hasManyModels || undefined,
     };
   }
 
