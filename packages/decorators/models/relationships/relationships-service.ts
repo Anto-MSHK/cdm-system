@@ -1,12 +1,12 @@
 import { Model } from "@models/Model";
-import { HAS_MANY_KEY, HAS_ONE_KEY } from "../../_constants";
-import { HasOneConfig } from "../_types";
+import { HAS_MANY_KEY, HAS_ONE_KEY } from "../_constants";
+import { RelationshipConfig } from "../_types";
 import { Scope } from "src/Scope";
 
 export function annotateHasMany(
   target: Object,
   propertyName: string,
-  options: HasOneConfig
+  options: RelationshipConfig
 ) {
   addRelationshipAttributes(target, options.model, HAS_MANY_KEY, {
     ...options,
@@ -17,7 +17,7 @@ export function annotateHasMany(
 export function annotateHasOne(
   target: Object,
   propertyName: string,
-  options: HasOneConfig
+  options: RelationshipConfig
 ) {
   addRelationshipAttributes(target, options.model, HAS_ONE_KEY, {
     ...options,
@@ -56,7 +56,7 @@ function addRelationshipAttributes(
   target: Object,
   relation: Scope,
   key: string,
-  options: Omit<HasOneConfig, "model">
+  options: Omit<RelationshipConfig, "model">
 ) {
   setRelationship(key, target, relation, options.linkFieldName);
 }

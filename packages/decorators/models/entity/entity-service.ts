@@ -1,4 +1,4 @@
-import { ENTITY_KEY } from "../../_constants";
+import { ENTITY_KEY } from "../_constants";
 import { EntityConfig, ModelConfig } from "../_types";
 
 export function annotateEntity(target: Function, options: EntityConfig) {

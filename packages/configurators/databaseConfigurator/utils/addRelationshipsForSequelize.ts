@@ -7,10 +7,10 @@ export function addRelationshipsForSequelize(
   modelsCDM: ModelCDM[]
 ): void {
   for (let key in modelsDB) {
-    const curModelCDM = modelsCDM.find((m) => m.relation() === key);
+    const curModelCDM = modelsCDM.find((m) => m._relation() === key);
     const curModelDB = modelsDB[key];
-    const hasOneModels = curModelCDM?._getAllFields().hasOneModels;
-    const hasManyModels = curModelCDM?._getAllFields().hasManyModels;
+    const hasOneModels = curModelCDM?._getModelParams().hasOneModels;
+    const hasManyModels = curModelCDM?._getModelParams().hasManyModels;
 
     if (hasOneModels && hasOneModels.length > 0) {
       hasOneModels.forEach((m) => {

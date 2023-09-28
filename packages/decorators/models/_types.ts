@@ -14,8 +14,6 @@ export interface ModelConfig {
   modelName?: string;
 }
 
-export interface ContactModelConfig extends ModelConfig {}
-
 export enum FieldType {
   UUID = "uuid",
   STRING = "string",
@@ -37,7 +35,7 @@ export interface FieldConfig {
   defaultValue?: FieldDefaultValueType[FieldType];
 }
 
-export interface HasOneConfig {
+export interface RelationshipConfig {
   model: Scope;
   linkFieldName?: string;
 }

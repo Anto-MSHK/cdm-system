@@ -11,10 +11,19 @@ import {
 import {
   CREATE_METHOD,
   DELETE_METHOD,
-  GET_METHOD,
+  GET_ALL_METHOD,
+  GET_ONE_METHOD,
   UPDATE_METHOD,
 } from "@configurators/routesConfigurator/_constants";
 import { saveConfigToFile } from "./utils/saveConfigToFile";
+
+const MethodsType = {
+  [GET_ALL_METHOD as string]: "get",
+  [GET_ONE_METHOD as string]: "get",
+  [UPDATE_METHOD as string]: "put",
+  [CREATE_METHOD as string]: "post",
+  [DELETE_METHOD as string]: "delete",
+};
 
 export function DocsConfigurator(
   routes: RouteType[],
@@ -25,11 +34,8 @@ export function DocsConfigurator(
     let operations: { [key: string]: SwaggerMethod } = {};
     for (let operKey in r.operations as any) {
       const curFields: FieldInRoute[] = r.operations[operKey];
-      let curMethod: "get" | "post" | "put" | "delete" = "get";
-      if (operKey === GET_METHOD) curMethod = "get";
-      else if (operKey === UPDATE_METHOD) curMethod = "put";
-      else if (operKey === CREATE_METHOD) curMethod = "post";
-      else if (operKey === DELETE_METHOD) curMethod = "delete";
+      let curMethod = MethodsType[operKey];
+
       const swaggerFields: SwaggerParam[] = curFields.map((field) => {
         return {
           name: field.name,
@@ -38,7 +44,15 @@ export function DocsConfigurator(
           in: field.input,
         };
       });
-      operations[curMethod] = { parameters: swaggerFields };
+      if (operKey !== GET_ONE_METHOD) {
+        operations[curMethod] = {
+          parameters: swaggerFields,
+          tags: [r.routeName],
+        };
+      } else
+        paths[`/${r.routeName}/{id}`] = {
+          get: { parameters: swaggerFields, tags: [r.routeName] },
+        };
     }
     paths[`/${r.routeName}/`] = { ...operations };
   });

@@ -1,47 +1,59 @@
 import { Model } from "@models/Model";
-import {
-  CREATE,
-  DELETE,
-  DELETE_METHOD,
-  GET,
-  GET_METHOD,
-  UPDATE,
-} from "./_constants";
-import { typeValidator } from "./utils/validator";
 import { FieldInRoute, RouteType } from "./_types";
+import { bodyParamsService } from "./services/bodyParamsService";
+import { DELETE_METHOD, GET_ALL_METHOD, GET_ONE_METHOD } from "./_constants";
+import {
+  GET_ALL,
+  GET_ONE,
+  CREATE,
+  UPDATE,
+  DELETE,
+} from "@decorators/routes/_constants";
+import { getDefaultBodyFields } from "./utils/getDefaultBodyFields";
 
 export function RoutesConfigurator(models: Model[]): any {
   const routes: RouteType[] = [];
   models.forEach((model) => {
-    const modelConfig = model._getConfig();
-    const allFields = model._getAllFields().fields;
-    const operations = [GET, CREATE, DELETE, UPDATE];
-    let validators: { [key: string]: FieldInRoute[] } = {};
+    const modelConfig = model._getConfig(); // конфигурация модели
+    const modelParams = model._getModelParams(); // параметры модели и все её связи
+    const modelEndPoints = model._getRoutes() || [
+      GET_ALL(),
+      GET_ONE(),
+      CREATE(),
+      UPDATE(),
+      DELETE(),
+    ]; // все endpoints модели
+    let operations: { [key: string]: FieldInRoute[] } = {};
 
-    for (const operation of operations) {
-      validators[operation.method] = [];
-      if (operation.method !== GET_METHOD && operation.method !== DELETE_METHOD)
-        for (const key in allFields) {
-          const field = allFields[key];
-          if (key !== "id")
-            validators[operation.method].push({
-              name: key,
-              validator: typeValidator("body", key, field.type, field.required),
-              input: "body",
-              ...field,
-            });
-        }
-      const additionalQueries = operation.queries || [];
-      validators[operation.method] = [
-        ...validators[operation.method],
+    for (const endPoint of modelEndPoints) {
+      operations[endPoint.method] = [];
+      if (
+        endPoint.method !== GET_ONE_METHOD &&
+        endPoint.method !== GET_ALL_METHOD &&
+        endPoint.method !== DELETE_METHOD
+      ) {
+        // если метод требует body параметры
+        if (!endPoint.body)
+          endPoint.body = getDefaultBodyFields(modelParams.fields);
+        bodyParamsService(
+          modelParams,
+          operations[endPoint.method],
+          endPoint.body
+        );
+      }
+      // добавление query параметров (если есть)
+      const additionalQueries = endPoint.queries || [];
+      operations[endPoint.method] = [
+        ...operations[endPoint.method],
         ...additionalQueries,
       ];
-      if (operation.param) validators[operation.method].push(operation.param);
+      // добавление path параметров (если есть)
+      if (endPoint.param) operations[endPoint.method].push(endPoint.param);
     }
 
     routes.push({
       routeName: modelConfig.modelName?.toLowerCase() as string,
-      operations: validators,
+      operations,
     });
   });
 

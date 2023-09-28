@@ -1,8 +1,8 @@
-import { ContactModelConfig } from "@decorators/models/_types";
-import { MODEL_CONFIG_KEY } from "../../_constants";
+import { MODEL_CONFIG_KEY } from "../_constants";
+import { ModelConfig } from "../_types";
 import { annotateModel } from "./modelConfig-service";
 
-export function ModelConfig(metadata?: ContactModelConfig) {
+export function ModelConfig(metadata?: ModelConfig) {
   return function (target: Function) {
     annotateModel(target, MODEL_CONFIG_KEY, metadata);
   };

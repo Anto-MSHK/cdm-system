@@ -27,6 +27,7 @@ type SwaggerMethod = {
     "400": SwaggerResponse;
     "404": SwaggerResponse;
   };
+  tags?: string[];
 };
 
 type SwaggerPath = {

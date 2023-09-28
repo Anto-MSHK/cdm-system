@@ -30,7 +30,7 @@ export function paramsForSequelize(
   model: ModelCDM
 ): [string, SequelizeModelParams] {
   const modelName = model._getConfig().modelName as string;
-  const fields = model._getAllFields().fields;
+  const fields = model._getModelParams().fields;
   let sequelizeFields: SequelizeModelParams = {};
 
   for (let key in fields) {

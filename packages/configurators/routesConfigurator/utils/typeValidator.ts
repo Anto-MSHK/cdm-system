@@ -16,6 +16,13 @@ const typeValid: {
   [FieldType.UUID]: "isUUID",
 };
 
+/**
+ * Валидация параметра через библиотеку express-validator
+ * @param {string} input - тип передачи параметра в запросе (path, query, body)
+ * @param {string} name - имя параметра (должно совпадать с именем поля в модели)
+ * @param {FieldType} type - тип параметра
+ * @param {boolean} required - обязателен ли параметр
+ */
 export const typeValidator = (
   input: keyof typeof inputType,
   name: string,
