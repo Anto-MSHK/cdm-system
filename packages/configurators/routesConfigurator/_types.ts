@@ -8,7 +8,11 @@ export type FieldInRoute = {
   input: keyof typeof inputType;
 } & Partial<FieldConfig>;
 
+export type OperationType = {
+  [key: string]: { fields: FieldInRoute[]; endpoint: string };
+};
+
 export type RouteType = {
   routeName: string;
-  operations: { [key: string]: FieldInRoute[] };
+  operations: OperationType;
 };

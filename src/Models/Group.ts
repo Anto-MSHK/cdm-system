@@ -6,11 +6,11 @@ import { Scope } from "src/Scope";
 import { Model } from "@models/Model";
 
 @ModelConfig()
-class Client extends Model {
+export class Group extends Model {
   @Field({ type: FieldType.STRING })
   name: string | undefined;
-  @HasMany({ model: Scope.Chapter })
-  chapters: string | undefined;
+  @HasMany({ model: Scope.Book })
+  books: string | undefined;
 }
 
-export default new Client();
+export default new Group();

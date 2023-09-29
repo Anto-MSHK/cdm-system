@@ -1,12 +1,12 @@
 import { AppConfigurator } from "@configurators/index";
 import dotenv from "dotenv";
+import Author from "src/Models/Author";
 import Book from "src/Models/Book";
-import Client from "src/Models/Client";
-import Chapter from "src/Models/Chapter";
+import Group from "src/Models/Group";
 
 dotenv.config();
 
-AppConfigurator([Book, Client, Chapter], {
+AppConfigurator([Book, Group, Author], {
   serverPort: process.env.SERVER_PORT as any,
   database: {
     dialect: "postgres",

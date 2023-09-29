@@ -3,15 +3,12 @@ import { Field } from "@decorators/models/field/field";
 import { FieldType } from "@decorators/models/_types";
 import { Scope } from "src/Scope";
 import { Model } from "@models/Model";
-import { HasOne } from "@decorators/models/relationships/hasOne";
+import { HasMany } from "@decorators/models/relationships/hasMany";
 
 @ModelConfig()
-class Chapter extends Model {
+export class Author extends Model {
   @Field({ type: FieldType.STRING })
   title: string | undefined;
-
-  @HasOne({ model: Scope.Book })
-  book: string | undefined;
 }
 
-export default new Chapter();
+export default new Author();

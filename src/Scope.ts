@@ -1,5 +1,5 @@
 export enum Scope {
   Book,
-  Chapter,
-  Client,
+  Group,
+  Author,
 }

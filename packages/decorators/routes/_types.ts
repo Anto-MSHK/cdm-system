@@ -9,17 +9,19 @@ import {
 } from "./../../configurators/routesConfigurator/_constants";
 
 export type MethodType<T = { [key: string]: any }> = {
-  method:
-    | typeof GET_ONE_METHOD
+  method: // тип метода
+  | typeof GET_ONE_METHOD
     | typeof GET_ALL_METHOD
     | typeof CREATE_METHOD
     | typeof UPDATE_METHOD
     | typeof DELETE_METHOD;
-  param?: FieldInRoute;
-  queries?: FieldInRoute[];
-  body?: string[];
+  additionalPath?: string; // дополнительная приставка к основному адресу
+  // пример: основной адрес - /book/
+  // дополнительная приставка - add-author
+  // в итоге - /book/add-author
+  param?: FieldInRoute; // параметры адресной строки
+  queries?: FieldInRoute[]; // query параметры
+  body?: string[]; // body параметры
 };
-
-// export type ModelParams<T> =
 
 export type RoutesConfigType<T = any> = MethodType<T>[];

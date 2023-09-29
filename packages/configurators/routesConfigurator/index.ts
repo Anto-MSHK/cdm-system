@@ -1,5 +1,5 @@
 import { Model } from "@models/Model";
-import { FieldInRoute, RouteType } from "./_types";
+import { FieldInRoute, OperationType, RouteType } from "./_types";
 import { bodyParamsService } from "./services/bodyParamsService";
 import { DELETE_METHOD, GET_ALL_METHOD, GET_ONE_METHOD } from "./_constants";
 import {
@@ -23,10 +23,13 @@ export function RoutesConfigurator(models: Model[]): any {
       UPDATE(),
       DELETE(),
     ]; // все endpoints модели
-    let operations: { [key: string]: FieldInRoute[] } = {};
+    let operations: OperationType = {};
 
     for (const endPoint of modelEndPoints) {
-      operations[endPoint.method] = [];
+      operations[endPoint.method] = {
+        fields: [],
+        endpoint: endPoint.additionalPath || "", // дополнительный путь
+      };
       if (
         endPoint.method !== GET_ONE_METHOD &&
         endPoint.method !== GET_ALL_METHOD &&
@@ -37,18 +40,19 @@ export function RoutesConfigurator(models: Model[]): any {
           endPoint.body = getDefaultBodyFields(modelParams.fields);
         bodyParamsService(
           modelParams,
-          operations[endPoint.method],
+          operations[endPoint.method].fields,
           endPoint.body
         );
       }
       // добавление query параметров (если есть)
       const additionalQueries = endPoint.queries || [];
-      operations[endPoint.method] = [
-        ...operations[endPoint.method],
+      operations[endPoint.method].fields = [
+        ...operations[endPoint.method].fields,
         ...additionalQueries,
       ];
       // добавление path параметров (если есть)
-      if (endPoint.param) operations[endPoint.method].push(endPoint.param);
+      if (endPoint.param)
+        operations[endPoint.method].fields.push(endPoint.param);
     }
 
     routes.push({
