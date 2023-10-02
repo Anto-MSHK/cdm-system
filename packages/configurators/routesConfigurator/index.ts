@@ -1,7 +1,12 @@
 import { Model } from "@models/Model";
 import { OperationType, RouteType } from "./_types";
 import { bodyParamsService } from "./services/bodyParamsService";
-import { DELETE_METHOD, GET_ALL_METHOD, GET_ONE_METHOD } from "./_constants";
+import {
+  DELETE_METHOD,
+  GET_ALL_METHOD,
+  GET_ONE_METHOD,
+  defaultHandler,
+} from "./_constants";
 import {
   GET_ALL,
   GET_ONE,
@@ -10,6 +15,8 @@ import {
   DELETE,
 } from "@decorators/routes/_constants";
 import { getDefaultBodyFields } from "./utils/getDefaultBodyFields";
+import { dev_route } from "./dev/route";
+import { getModels } from "sequelize-typescript";
 
 export function RoutesConfigurator(models: Model[]): any {
   const routes: RouteType[] = [];
@@ -29,6 +36,7 @@ export function RoutesConfigurator(models: Model[]): any {
       operations[endPoint.method] = {
         fields: [],
         endpoint: endPoint.additionalPath || "", // дополнительный путь
+        id: endPoint.id,
       };
       if (
         endPoint.method !== GET_ONE_METHOD &&
@@ -53,6 +61,8 @@ export function RoutesConfigurator(models: Model[]): any {
       // добавление path параметров (если есть)
       if (endPoint.param)
         operations[endPoint.method].fields.push(endPoint.param);
+
+      operations[endPoint.method].handler = getModels;
     }
 
     routes.push({
@@ -60,6 +70,8 @@ export function RoutesConfigurator(models: Model[]): any {
       operations,
     });
   });
+
+  routes.push(dev_route);
 
   return routes;
 }

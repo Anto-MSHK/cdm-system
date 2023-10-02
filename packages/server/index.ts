@@ -4,9 +4,14 @@ import { logger } from "packages/logger";
 import fs from "fs";
 import swaggerUi from "swagger-ui-express";
 import { DOCS_FILE_PATH } from "@configurators/docsConfigurator/utils/saveConfigToFile";
-interface ServerConfig {
+import { RouteType } from "@configurators/routesConfigurator/_types";
+import { contextFor } from "@configurators/routesConfigurator/utils/contextFor";
+import { getModels } from "@configurators/routesConfigurator/dev/handlers";
+import { bindingHandlers } from "./bindingHandlers";
+export interface ServerConfig {
   port: number;
   db: DB;
+  routes: RouteType[];
 }
 
 export function StartServer(config: ServerConfig) {
@@ -14,11 +19,8 @@ export function StartServer(config: ServerConfig) {
   const port = config.port;
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
-  app.get("/", async (req: Request, res: Response): Promise<Response> => {
-    return res.status(200).send({
-      message: `Welcome to API!`,
-    });
-  });
+
+  bindingHandlers(app, config);
 
   let swaggerConfig = undefined;
   try {

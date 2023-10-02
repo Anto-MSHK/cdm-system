@@ -8,7 +8,7 @@ import { RoutesConfig } from "@decorators/routes/routesConfig/routesConfig";
 import { CREATE, GET_ALL, UPDATE } from "@decorators/routes/_constants";
 
 @ModelConfig()
-@RoutesConfig<Book>([CREATE(["name"]), UPDATE(["name"])])
+@RoutesConfig<Book>([GET_ALL()])
 class Book extends Model {
   @Field({ type: FieldType.STRING })
   name: string | undefined;

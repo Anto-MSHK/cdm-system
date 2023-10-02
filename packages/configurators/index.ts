@@ -35,5 +35,5 @@ export async function AppConfigurator(
     host: `localhost:${config.serverPort || 3000}`,
   });
   logger.info("DB Data configuration - completed");
-  StartServer({ db, port: config.serverPort || 3000 });
+  StartServer({ db, routes, port: config.serverPort || 3000 });
 }

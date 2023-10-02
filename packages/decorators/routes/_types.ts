@@ -22,6 +22,7 @@ export type MethodType<T = { [key: string]: any }> = {
   param?: FieldInRoute; // параметры адресной строки
   queries?: FieldInRoute[]; // query параметры
   body?: string[]; // body параметры
+  id: string;
 };
 
 export type RoutesConfigType<T = any> = MethodType<T>[];

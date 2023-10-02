@@ -17,15 +17,7 @@ import {
   UPDATE_METHOD,
 } from "@configurators/routesConfigurator/_constants";
 import { saveConfigToFile } from "./utils/saveConfigToFile";
-import { MethodType } from "@decorators/routes/_types";
-
-const MethodsType = {
-  [GET_ALL_METHOD as string]: "get",
-  [GET_ONE_METHOD as string]: "get",
-  [UPDATE_METHOD as string]: "put",
-  [CREATE_METHOD as string]: "post",
-  [DELETE_METHOD as string]: "delete",
-};
+import { MethodsType } from "@decorators/routes/_constants";
 
 export function DocsConfigurator(
   routes: RouteType[],
