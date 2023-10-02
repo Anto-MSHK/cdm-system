@@ -37,8 +37,12 @@ export function DocsConfigurator(
     };
   } = {};
   routes.forEach((r) => {
-    for (let operKey in r.operations) {
-      const path = `/${r.routeName}/${r.operations[operKey].endpoint}`;
+    for (const operKey in r.operations) {
+      const path = `/${r.routeName}/${
+        r.operations[operKey].endpoint
+          ? r.operations[operKey].endpoint + "/"
+          : ""
+      }`;
       paths[path] = {
         [operKey]: { ...r.operations[operKey], tag: r.routeName },
         ...paths[path],
@@ -46,28 +50,32 @@ export function DocsConfigurator(
     }
   });
   const swaggerPaths: { [key: string]: SwaggerPath } = {};
-  for (let path in paths) {
+  for (const path in paths) {
     let operations: { [key: string]: SwaggerMethod } = {};
-    for (let method in paths[path]) {
+    for (const method in paths[path]) {
       const curFields: FieldInRoute[] = paths[path][method].fields;
       const curTag: string = paths[path][method].tag;
-      let curMethod = MethodsType[method];
-      const swaggerFields: SwaggerParam[] = curFields.map((field) => {
-        return {
-          name: field.name,
-          type: field.type as any,
-          required: field.required,
-          in: field.input,
-        };
-      });
-      if (method !== GET_ONE_METHOD) {
-        operations[curMethod] = {
+      const curMethod = MethodsType[method];
+      const swaggerFields: SwaggerParam[] = curFields.map((field) => ({
+        name: field.name,
+        type: field.type as any,
+        required: field.required,
+        in: field.input,
+      }));
+      const pathParam = curFields.find((f) => f.input === "path");
+      if (pathParam) {
+        if (!swaggerPaths[`${path}{${pathParam.name}}`])
+          swaggerPaths[`${path}{${pathParam.name}}`] = {};
+        swaggerPaths[`${path}{${pathParam.name}}`][
+          curMethod as keyof SwaggerPath
+        ] = {
           parameters: swaggerFields,
           tags: [curTag],
         };
       } else
-        swaggerPaths[`${path}{id}`] = {
-          get: { parameters: swaggerFields, tags: [curTag] },
+        operations[curMethod] = {
+          parameters: swaggerFields,
+          tags: [curTag],
         };
     }
     swaggerPaths[path] = { ...operations };

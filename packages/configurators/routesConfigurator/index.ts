@@ -1,5 +1,5 @@
 import { Model } from "@models/Model";
-import { FieldInRoute, OperationType, RouteType } from "./_types";
+import { OperationType, RouteType } from "./_types";
 import { bodyParamsService } from "./services/bodyParamsService";
 import { DELETE_METHOD, GET_ALL_METHOD, GET_ONE_METHOD } from "./_constants";
 import {

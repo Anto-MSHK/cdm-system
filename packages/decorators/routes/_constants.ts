@@ -54,7 +54,6 @@ export function UPDATE<T>(body?: (keyof T)[]): MethodType<T> {
       input: "path",
     },
     body: body as string[],
-    additionalPath: "prekol",
   };
 }
 /**
@@ -68,6 +67,5 @@ export function DELETE(): MethodType<any> {
       validator: typeValidator("path", "id", FieldType.UUID, true),
       input: "path",
     },
-    additionalPath: "delete",
   };
 }
