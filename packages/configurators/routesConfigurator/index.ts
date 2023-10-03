@@ -62,7 +62,7 @@ export function RoutesConfigurator(models: Model[]): any {
       if (endPoint.param)
         operations[endPoint.method].fields.push(endPoint.param);
 
-      operations[endPoint.method].handler = getModels;
+      operations[endPoint.method].handler = defaultHandler;
     }
 
     routes.push({

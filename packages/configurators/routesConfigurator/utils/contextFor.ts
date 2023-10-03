@@ -12,23 +12,26 @@ export const contextFor =
     config: ServerConfig,
     operId: string
   ) =>
-  async (res: Response, req: Request) => {
+  async (req: Request, res: Response) => {
     let curEndpoint = undefined;
     let curRoute = undefined;
-    config.routes.find((route) => {
+    config.routes.forEach((route) => {
       const operations = Object.keys(route.operations).map((key) => {
         return route.operations[key];
       });
-      curEndpoint = operations.find((oper) => oper.id === operId);
-      curRoute = route.routeName;
+      const curOper = operations.find((oper) => oper.id === operId);
+      if (curOper) {
+        curEndpoint = curOper;
+        curRoute = route.routeName;
+      }
     });
     if (curEndpoint && curRoute)
       return handler({
         db: config.db,
         route: { routeName: curRoute, operation: curEndpoint },
-      })(res, req);
+      })(req as any, res as any);
     else
-      return res.send({
-        message: "It is impossible to match the endpoint and the handler",
+      return res.status(500).send({
+        message: "Unknown error",
       });
   };

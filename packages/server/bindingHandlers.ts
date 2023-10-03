@@ -12,11 +12,6 @@ export function bindingHandlers(app: Application, config: ServerConfig) {
         getPath(route.routeName, curOper),
         contextFor(curOper.handler as any, config, curOper.id)
       );
-      console.log(
-        MethodsType[oper],
-        getPath(route.routeName, curOper),
-        contextFor(curOper.handler as any, config, curOper.id)
-      );
     }
   });
 }
