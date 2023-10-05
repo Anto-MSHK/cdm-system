@@ -16,7 +16,9 @@ export const getModels =
     return res.send(
       models.map((m) => ({
         modelName: m.name,
-        fields: (m as any).tableAttributes,
+        fields: fieldParametersForSequelize(
+          Object.values((m as any).tableAttributes)
+        ),
       }))
     );
   };
