@@ -1,76 +1,23 @@
-import {
-  FieldInRoute,
-  OperationType,
-  RouteType,
-} from "@configurators/routesConfigurator/_types";
-import {
-  SwaggerMethod,
-  SwaggerParam,
-  SwaggerPath,
-  UserDocsConfig,
-} from "./_types";
-import {
-  CREATE_METHOD,
-  DELETE_METHOD,
-  GET_ALL_METHOD,
-  GET_ONE_METHOD,
-  UPDATE_METHOD,
-} from "@configurators/routesConfigurator/_constants";
+import { RouteType } from "@configurators/routesConfigurator/_types";
+import { UserDocsConfig } from "./_types";
+
 import { saveConfigToFile } from "./utils/saveConfigToFile";
 import { MethodsType } from "@decorators/routes/_constants";
+import { routesService } from "./service/routesService";
+import { definitionsService } from "./service/definitionsService";
+import { ModelCtor } from "sequelize-typescript";
 
 export function DocsConfigurator(
   routes: RouteType[],
+  models: { [key: string]: ModelCtor },
   config: UserDocsConfig
 ): void {
-  const paths: {
-    [key: string]: {
-      [key: string]: { fields: FieldInRoute[]; endpoint: string; tag: string };
-    };
-  } = {};
-  routes.forEach((r) => {
-    for (const operKey in r.operations) {
-      const path = `/${r.routeName}/${
-        r.operations[operKey].endpoint
-          ? r.operations[operKey].endpoint + "/"
-          : ""
-      }`;
-      paths[path] = {
-        [operKey]: { ...r.operations[operKey], tag: r.routeName },
-        ...paths[path],
-      };
-    }
+  const swaggerPaths = routesService(routes);
+  const swaggerDefinitions = definitionsService(models, routes);
+  saveConfigToFile({
+    swagger: "2.0",
+    paths: swaggerPaths,
+    definitions: swaggerDefinitions,
+    ...config,
   });
-  const swaggerPaths: { [key: string]: SwaggerPath } = {};
-  for (const path in paths) {
-    let operations: { [key: string]: SwaggerMethod } = {};
-    for (const method in paths[path]) {
-      const curFields: FieldInRoute[] = paths[path][method].fields;
-      const curTag: string = paths[path][method].tag;
-      const curMethod = MethodsType[method];
-      const swaggerFields: SwaggerParam[] = curFields.map((field) => ({
-        name: field.name,
-        type: field.type as any,
-        required: field.required,
-        in: field.input,
-      }));
-      const pathParam = curFields.find((f) => f.input === "path");
-      if (pathParam) {
-        if (!swaggerPaths[`${path}{${pathParam.name}}`])
-          swaggerPaths[`${path}{${pathParam.name}}`] = {};
-        swaggerPaths[`${path}{${pathParam.name}}`][
-          curMethod as keyof SwaggerPath
-        ] = {
-          parameters: swaggerFields,
-          tags: [curTag],
-        };
-      } else
-        operations[curMethod] = {
-          parameters: swaggerFields,
-          tags: [curTag],
-        };
-    }
-    swaggerPaths[path] = { ...operations };
-  }
-  saveConfigToFile({ swagger: "2.0", paths: swaggerPaths, ...config });
 }

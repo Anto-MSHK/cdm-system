@@ -38,16 +38,19 @@ type SwaggerPath = {
   delete?: SwaggerMethod;
 };
 
+type SwaggerPropertiesDefinition = {
+  type: "string" | "number" | "boolean";
+  example?: string;
+  $ref?: string;
+};
 type SwaggerDefinitions = {
   [key: string]: {
     // (model) Todo
     type: "object";
     properties: {
-      [key: string]: {
-        type: "string" | "number" | "boolean";
-        example: string;
-      };
+      [key: string]: SwaggerPropertiesDefinition;
     };
+    required?: string[];
   };
 };
 type SwaggerDocsConfig = {
@@ -72,6 +75,7 @@ export {
   SwaggerParam,
   SwaggerMethod,
   SwaggerPath,
+  SwaggerPropertiesDefinition,
   SwaggerDefinitions,
   SwaggerDocsConfig,
 };

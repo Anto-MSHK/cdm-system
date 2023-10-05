@@ -25,7 +25,7 @@ export async function AppConfigurator(
 ) {
   const db = DatabaseConfigurator(models, config["database"]);
   const routes = RoutesConfigurator(models);
-  DocsConfigurator(routes, {
+  DocsConfigurator(routes, db.models, {
     info: {
       title: "CDM-server",
       description: "Customizable data management system",
