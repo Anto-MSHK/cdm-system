@@ -19,7 +19,6 @@ export function StartServer(config: ServerConfig) {
   const port = config.port;
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
-
   bindingHandlers(app, config);
 
   let swaggerConfig = undefined;

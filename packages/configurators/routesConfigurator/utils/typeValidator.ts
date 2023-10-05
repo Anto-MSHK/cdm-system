@@ -29,7 +29,9 @@ export const typeValidator = (
   type: FieldType,
   required?: boolean
 ) => {
-  const validObj = inputType[input](name)[typeValid[type] as "isString"]();
+  const validObj = inputType[input](name)
+    [typeValid[type] as "isString"]()
+    .withMessage(typeValid[type]);
   if (required) validObj.notEmpty();
   return validObj;
 };

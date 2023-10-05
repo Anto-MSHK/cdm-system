@@ -1,6 +1,6 @@
 import { AppConfiguratorConfig } from "@configurators/index";
 import { Request, RequestHandler, Response } from "express";
-import { HandlerParams } from "../_types";
+import { ErrorType, HandlerParams } from "../_types";
 import { ServerConfig } from "../../../server/index";
 import { logger } from "packages/logger";
 
@@ -28,10 +28,11 @@ export const contextFor =
     if (curEndpoint && curRoute)
       return handler({
         db: config.db,
-        route: { routeName: curRoute, operation: curEndpoint },
+        curRoute: { routeName: curRoute, operation: curEndpoint },
+        allRoutes: config.routes,
       })(req as any, res as any);
     else
       return res.status(500).send({
         message: "Unknown error",
-      });
+      } as ErrorType);
   };

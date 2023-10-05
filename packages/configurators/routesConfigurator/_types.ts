@@ -16,6 +16,7 @@ export type OperationItemType = {
   endpoint: string;
   handler?: any;
   id: string;
+  path?: string;
 };
 
 export type OperationType = {
@@ -28,6 +29,12 @@ export type RouteType = {
 };
 
 export interface HandlerParams {
-  route: { routeName: string; operation: OperationItemType };
+  curRoute: { routeName: string; operation: OperationItemType };
   db: DB;
+  allRoutes: RouteType[];
+}
+
+export interface ErrorType {
+  message: string;
+  inDevelopment?: boolean;
 }

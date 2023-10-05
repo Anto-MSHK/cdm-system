@@ -17,6 +17,7 @@ import {
 import { getDefaultBodyFields } from "./utils/getDefaultBodyFields";
 import { dev_route } from "./dev/route";
 import { getModels } from "sequelize-typescript";
+import { getPath } from "./utils/getPath";
 
 export function RoutesConfigurator(models: Model[]): any {
   const routes: RouteType[] = [];
@@ -31,6 +32,7 @@ export function RoutesConfigurator(models: Model[]): any {
       DELETE(),
     ]; // все endpoints модели
     let operations: OperationType = {};
+    const modelName = modelConfig.modelName?.toLowerCase() as string;
 
     for (const endPoint of modelEndPoints) {
       operations[endPoint.method] = {
@@ -63,10 +65,15 @@ export function RoutesConfigurator(models: Model[]): any {
         operations[endPoint.method].fields.push(endPoint.param);
 
       operations[endPoint.method].handler = defaultHandler;
+
+      operations[endPoint.method].path = getPath(
+        modelName,
+        operations[endPoint.method]
+      );
     }
 
     routes.push({
-      routeName: modelConfig.modelName?.toLowerCase() as string,
+      routeName: modelName,
       operations,
     });
   });

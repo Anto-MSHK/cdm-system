@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { HandlerParams } from "./_types";
+import { ErrorType, HandlerParams } from "./_types";
 import { getPath } from "./utils/getPath";
 
 export const GET_ONE_METHOD = "operation:get_one";
@@ -8,12 +8,16 @@ export const CREATE_METHOD = "operation:create";
 export const UPDATE_METHOD = "operation:update";
 export const DELETE_METHOD = "operation:delete";
 
+/**
+ * Обработчик по умолчанию
+ */
 export const defaultHandler =
   (context: HandlerParams) => (req: Request, res: Response) => {
     return res.send({
       message: `${getPath(
-        context.route.routeName,
-        context.route.operation
-      )} - It is impossible to match the endpoint and the handler`,
-    });
+        context.curRoute.routeName,
+        context.curRoute.operation
+      )} - default handler (endpoint in development)`,
+      inDevelopment: true,
+    } as ErrorType);
   };

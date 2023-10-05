@@ -21,6 +21,7 @@ export function DatabaseConfigurator(
     ),
     Sequelize: Sequelize,
     models: {},
+    cdmModels: models,
   };
 
   models.forEach((model) => {

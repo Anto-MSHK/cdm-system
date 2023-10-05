@@ -4,7 +4,7 @@ import { GET_ALL_METHOD, defaultHandler } from "../_constants";
 import { typeValidator } from "../utils/typeValidator";
 import { FieldType } from "@decorators/models/_types";
 import { contextFor } from "../utils/contextFor";
-import { getModels } from "./handlers";
+import { getModelByName, getModels } from "./handlers";
 import { v4 as uuidv4 } from "uuid";
 export const dev_route: RouteType = {
   routeName: "dev",
@@ -26,7 +26,7 @@ export const dev_route: RouteType = {
         },
       ],
       endpoint: "models",
-      handler: defaultHandler,
+      handler: getModelByName,
       id: uuidv4(),
     },
   },
