@@ -25,11 +25,11 @@ export function RoutesConfigurator(models: Model[]): any {
     const modelConfig = model._getConfig(); // конфигурация модели
     const modelParams = model._getModelParams(); // параметры модели и все её связи
     const modelEndPoints = model._getRoutes() || [
-      GET_ALL(),
-      GET_ONE(),
-      CREATE(),
-      UPDATE(),
       DELETE(),
+      UPDATE(),
+      CREATE(),
+      GET_ONE(),
+      GET_ALL(),
     ]; // все endpoints модели
     let operations: OperationType = {};
     const modelName = modelConfig.modelName?.toLowerCase() as string;

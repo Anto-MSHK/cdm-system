@@ -6,6 +6,7 @@ import { logger } from "packages/logger";
 import { DatabaseConfigurator } from "@configurators/databaseConfigurator";
 import { RoutesConfigurator } from "./routesConfigurator";
 import { DocsConfigurator } from "./docsConfigurator";
+import translate from "packages/i18next";
 
 export interface AppConfiguratorConfig {
   serverPort: number;
@@ -28,8 +29,8 @@ export async function AppConfigurator(
   DocsConfigurator(routes, db.models, {
     info: {
       title: "CDM-server",
-      description: "Customizable data management system",
-      version: "0.0.1",
+      description: translate("swagger-desc"),
+      version: "0.4.0",
     },
     basePath: "/",
     host: `localhost:${config.serverPort || 3000}`,

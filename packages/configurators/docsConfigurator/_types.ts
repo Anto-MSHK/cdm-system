@@ -12,22 +12,28 @@ type SwaggerResponse = {
 };
 
 type SwaggerParam = {
-  name: string;
+  name?: string;
   required?: boolean;
   in: "path" | "query" | "body";
-  type: "string" | "number" | "boolean" | "uuid";
+  type: "string" | "number" | "boolean" | "object";
   description?: string;
+  schema?: {
+    $ref: string;
+  };
 };
 
 type SwaggerMethod = {
+  summary?: string;
+  operationId?: string;
   description?: string;
   parameters?: SwaggerParam[];
   responses?: {
     "200": SwaggerResponse;
-    "400": SwaggerResponse;
-    "404": SwaggerResponse;
+    "400"?: SwaggerResponse;
+    "404"?: SwaggerResponse;
   };
   tags?: string[];
+  $ref?: string;
 };
 
 type SwaggerPath = {
@@ -39,7 +45,8 @@ type SwaggerPath = {
 };
 
 type SwaggerPropertiesDefinition = {
-  type: "string" | "number" | "boolean";
+  type: SwaggerParam["type"];
+  description?: string;
   example?: string;
   $ref?: string;
 };
@@ -47,6 +54,7 @@ type SwaggerDefinitions = {
   [key: string]: {
     // (model) Todo
     type: "object";
+    description: string;
     properties: {
       [key: string]: SwaggerPropertiesDefinition;
     };

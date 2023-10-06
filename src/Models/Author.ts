@@ -8,7 +8,7 @@ import { HasMany } from "@decorators/models/relationships/hasMany";
 @ModelConfig()
 export class Author extends Model {
   @Field({ type: FieldType.STRING })
-  title: string | undefined;
+  name: string | undefined;
 }
 
 export default new Author();

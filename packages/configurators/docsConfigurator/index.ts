@@ -12,8 +12,8 @@ export function DocsConfigurator(
   models: { [key: string]: ModelCtor },
   config: UserDocsConfig
 ): void {
-  const swaggerPaths = routesService(routes);
   const swaggerDefinitions = definitionsService(models, routes);
+  const swaggerPaths = routesService(routes);
   saveConfigToFile({
     swagger: "2.0",
     paths: swaggerPaths,

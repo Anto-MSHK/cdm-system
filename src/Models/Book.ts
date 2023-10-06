@@ -11,7 +11,7 @@ import { CREATE, GET_ALL, UPDATE } from "@decorators/routes/_constants";
 @RoutesConfig<Book>([GET_ALL()])
 class Book extends Model {
   @Field({ type: FieldType.STRING })
-  name: string | undefined;
+  title: string | undefined;
 
   @HasOne({ model: Scope.Author })
   author: string | undefined;

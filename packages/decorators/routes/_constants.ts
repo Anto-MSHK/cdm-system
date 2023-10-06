@@ -35,8 +35,10 @@ export function GET_ONE(): MethodType<any> {
     method: GET_ONE_METHOD,
     param: {
       name: "id",
+      type: FieldType.UUID,
       validator: typeValidator("path", "id", FieldType.UUID),
       input: "path",
+      required: true,
     },
     id: uuidv4(),
   };
@@ -61,8 +63,10 @@ export function UPDATE<T>(body?: (keyof T)[]): MethodType<T> {
     method: UPDATE_METHOD,
     param: {
       name: "id",
+      type: FieldType.UUID,
       validator: typeValidator("path", "id", FieldType.UUID, true),
       input: "path",
+      required: true,
     },
     body: body as string[],
     id: uuidv4(),
@@ -76,8 +80,10 @@ export function DELETE(): MethodType<any> {
     method: DELETE_METHOD,
     param: {
       name: "id",
+      type: FieldType.UUID,
       validator: typeValidator("path", "id", FieldType.UUID, true),
       input: "path",
+      required: true,
     },
     id: uuidv4(),
   };

@@ -3,9 +3,15 @@ import {
   RouteType,
 } from "@configurators/routesConfigurator/_types";
 import { ModelCtor } from "sequelize-typescript";
-import { SwaggerDefinitions, SwaggerPropertiesDefinition } from "../_types";
+import {
+  SwaggerDefinitions,
+  SwaggerParam,
+  SwaggerPropertiesDefinition,
+} from "../_types";
 import { fieldParametersForSequelize } from "@configurators/databaseConfigurator/utils/fieldParametersForSequelize";
 import { MethodsType } from "@decorators/routes/_constants";
+import { swaggerFieldTypes } from "../_constants";
+import translate from "packages/i18next";
 
 export function definitionsService(
   models: {
@@ -23,25 +29,36 @@ export function definitionsService(
     const required: string[] = [];
     allField.forEach((f) => {
       properties[f.fieldName] = {
-        type: f.type.toLocaleLowerCase() as any,
+        type: swaggerFieldTypes[f.type.toLocaleLowerCase()],
+        description: translate("type-ref") + f.type,
       };
       if (!f.allowNull) required.push(f.fieldName);
     });
-    swaggerDefinitions[model] = { type: "object", properties, required };
+    swaggerDefinitions[model] = {
+      type: "object",
+      properties,
+      required,
+      description: translate("def", { model }),
+    };
   }
   routes.forEach((route) => {
     for (let endpoint in route.operations) {
       const curOper = route.operations[endpoint];
-      const name = `${MethodsType[endpoint]}_${curOper.path}_DTO`;
+      const name = `${endpoint}-${route.routeName}`;
       if (curOper.fields.find((f) => f.input === "body")) {
         swaggerDefinitions[name] = {
           type: "object",
           properties: {},
+          description: translate("def-dto", {
+            path: curOper.path,
+            model: route.routeName,
+          }),
         };
         curOper.fields.forEach((f) => {
-          if (f.input === "body")
+          if (f.input === "body" && f.type)
             swaggerDefinitions[name].properties[f.name] = {
-              type: f.type as any,
+              type: swaggerFieldTypes[f.type],
+              description: translate("type-ref") + f.type,
             };
         });
       }
