@@ -6,7 +6,7 @@ import { SwaggerMethod, SwaggerParam, SwaggerPath } from "../_types";
 import { MethodsType } from "@decorators/routes/_constants";
 import { getResponseType } from "../utils/getResponseType";
 import { swaggerDescWithMethod, swaggerFieldTypes } from "../_constants";
-import translate from "packages/i18next";
+import translate from "packages/i18n/i18next";
 import { DEV_ROUTE_NAME } from "@configurators/routesConfigurator/_constants";
 
 export function routesService(routes: RouteType[]) {

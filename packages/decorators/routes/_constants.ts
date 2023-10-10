@@ -4,12 +4,14 @@ import {
   GET_ALL_METHOD,
   GET_ONE_METHOD as GET_ONE_METHOD,
   UPDATE_METHOD,
-  defaultHandler,
 } from "@configurators/routesConfigurator/_constants";
 import { typeValidator } from "@configurators/routesConfigurator/utils/typeValidator";
 import { MethodType } from "./_types";
 import { FieldType } from "@decorators/models/_types";
 import { v4 as uuidv4 } from "uuid";
+import { getAllHandler } from "packages/handlers/getAllHandler";
+import { defaultHandler } from "packages/handlers/defaultHandler";
+import { getOneHandler } from "packages/handlers/getOneHandler";
 // ключ для сохранения конфигурации роутов
 export const ROUTES_CONFIG_KEY = "models:routesConfig";
 
@@ -25,13 +27,14 @@ export const MethodsType = {
  * Функция конфигурации запроса на получение всех записей сущности
  */
 export function GET_ALL(): MethodType<any> {
-  return { method: GET_ALL_METHOD, id: uuidv4() };
+  return { method: GET_ALL_METHOD, id: uuidv4(), handler: getAllHandler };
 }
 /**
  * Функция конфигурации запроса на получение одной записи сущности (по id)
  */
 export function GET_ONE(): MethodType<any> {
   return {
+    id: uuidv4(),
     method: GET_ONE_METHOD,
     param: {
       name: "id",
@@ -40,7 +43,7 @@ export function GET_ONE(): MethodType<any> {
       input: "path",
       required: true,
     },
-    id: uuidv4(),
+    handler: getOneHandler,
   };
 }
 /**
@@ -49,9 +52,10 @@ export function GET_ONE(): MethodType<any> {
  */
 export function CREATE<T>(body?: (keyof T)[]): MethodType<T> {
   return {
+    id: uuidv4(),
     method: CREATE_METHOD,
     body: body as string[],
-    id: uuidv4(),
+    handler: defaultHandler,
   };
 }
 /**
@@ -60,6 +64,7 @@ export function CREATE<T>(body?: (keyof T)[]): MethodType<T> {
  */
 export function UPDATE<T>(body?: (keyof T)[]): MethodType<T> {
   return {
+    id: uuidv4(),
     method: UPDATE_METHOD,
     param: {
       name: "id",
@@ -69,7 +74,7 @@ export function UPDATE<T>(body?: (keyof T)[]): MethodType<T> {
       required: true,
     },
     body: body as string[],
-    id: uuidv4(),
+    handler: defaultHandler,
   };
 }
 /**
@@ -77,6 +82,7 @@ export function UPDATE<T>(body?: (keyof T)[]): MethodType<T> {
  */
 export function DELETE(): MethodType<any> {
   return {
+    id: uuidv4(),
     method: DELETE_METHOD,
     param: {
       name: "id",
@@ -85,6 +91,6 @@ export function DELETE(): MethodType<any> {
       input: "path",
       required: true,
     },
-    id: uuidv4(),
+    handler: defaultHandler,
   };
 }

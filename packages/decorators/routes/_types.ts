@@ -7,6 +7,7 @@ import {
   UPDATE_METHOD,
   DELETE_METHOD,
 } from "./../../configurators/routesConfigurator/_constants";
+import { HandlerType } from "packages/handlers/_types";
 
 export type MethodType<T = { [key: string]: any }> = {
   method: // тип метода
@@ -23,6 +24,7 @@ export type MethodType<T = { [key: string]: any }> = {
   queries?: FieldInRoute[]; // query параметры
   body?: string[]; // body параметры
   id: string;
+  handler: HandlerType<any>;
 };
 
 export type RoutesConfigType<T = any> = MethodType<T>[];

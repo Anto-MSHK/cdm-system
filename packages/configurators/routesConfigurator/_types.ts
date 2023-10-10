@@ -1,9 +1,6 @@
 import { ValidationChain } from "express-validator";
 import { inputType } from "./utils/typeValidator";
 import { FieldConfig } from "@decorators/models/_types";
-import { DB } from "@configurators/databaseConfigurator/_types";
-import { getModels } from "./dev/handlers";
-import { RequestHandler, Response } from "express";
 
 export type FieldInRoute = {
   name: string;
@@ -25,14 +22,9 @@ export type OperationType = {
 
 export type RouteType = {
   routeName: string;
+  modelName?: string;
   operations: OperationType;
 };
-
-export interface HandlerParams {
-  curRoute: { routeName: string; operation: OperationItemType };
-  db: DB;
-  allRoutes: RouteType[];
-}
 
 export interface ErrorType {
   message: string;

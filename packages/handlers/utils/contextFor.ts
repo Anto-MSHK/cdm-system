@@ -1,20 +1,15 @@
-import { AppConfiguratorConfig } from "@configurators/index";
-import { Request, RequestHandler, Response } from "express";
-import { ErrorType, HandlerParams } from "../_types";
-import { ServerConfig } from "../../../server/index";
-import { logger } from "packages/logger";
+import { Request, Response } from "express";
+import { ErrorType } from "../../configurators/routesConfigurator/_types";
+import { ServerConfig } from "../../server/index";
+import { HandlerType } from "packages/handlers/_types";
+import _ from "lodash";
 
 export const contextFor =
-  (
-    handler: (
-      context: HandlerParams
-    ) => (res: Response, req: Request) => RequestHandler,
-    config: ServerConfig,
-    operId: string
-  ) =>
+  (handler: HandlerType, config: ServerConfig, operId: string) =>
   async (req: Request, res: Response) => {
     let curEndpoint = undefined;
-    let curRoute = undefined;
+    let curRoute: string | undefined = undefined;
+    let curModel: string | undefined = undefined;
     config.routes.forEach((route) => {
       const operations = Object.keys(route.operations).map((key) => {
         return route.operations[key];
@@ -23,12 +18,18 @@ export const contextFor =
       if (curOper) {
         curEndpoint = curOper;
         curRoute = route.routeName;
+        curModel = route.modelName;
       }
     });
     if (curEndpoint && curRoute)
       return handler({
         db: config.db,
         curRoute: { routeName: curRoute, operation: curEndpoint },
+        curModel: curModel
+          ? {
+              modelName: curModel,
+            }
+          : undefined,
         allRoutes: config.routes,
       })(req as any, res as any);
     else

@@ -1,10 +1,10 @@
-import { Application, Request, Response } from "express";
-import { contextFor } from "../configurators/routesConfigurator/utils/contextFor";
-import { ServerConfig } from "./index";
+import { Application } from "express";
+import { contextFor } from "./contextFor";
+import { ServerConfig } from "@server/index";
 import { getPath } from "@configurators/routesConfigurator/utils/getPath";
 import { MethodsType } from "@decorators/routes/_constants";
 import express from "express";
-import { body, validationResult, ValidationChain } from "express-validator";
+import { validationResult, ValidationChain } from "express-validator";
 
 const validate = (validations: ValidationChain[]) => {
   return async (

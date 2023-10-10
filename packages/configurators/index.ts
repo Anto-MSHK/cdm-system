@@ -6,7 +6,7 @@ import { logger } from "packages/logger";
 import { DatabaseConfigurator } from "@configurators/databaseConfigurator";
 import { RoutesConfigurator } from "./routesConfigurator";
 import { DocsConfigurator } from "./docsConfigurator";
-import translate from "packages/i18next";
+import translate from "packages/i18n/i18next";
 
 export interface AppConfiguratorConfig {
   serverPort: number;

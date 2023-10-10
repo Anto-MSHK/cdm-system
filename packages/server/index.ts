@@ -5,9 +5,7 @@ import fs from "fs";
 import swaggerUi from "swagger-ui-express";
 import { DOCS_FILE_PATH } from "@configurators/docsConfigurator/utils/saveConfigToFile";
 import { RouteType } from "@configurators/routesConfigurator/_types";
-import { contextFor } from "@configurators/routesConfigurator/utils/contextFor";
-import { getModels } from "@configurators/routesConfigurator/dev/handlers";
-import { bindingHandlers } from "./bindingHandlers";
+import { bindingHandlers } from "../handlers/utils/bindingHandlers";
 export interface ServerConfig {
   port: number;
   db: DB;

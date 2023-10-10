@@ -1,6 +1,6 @@
 import "i18next";
 // import all namespaces (for the default language, only)
-import doc_ru from "./configurators/docsConfigurator/locales/ru.json";
+import doc_ru from "../configurators/docsConfigurator/locales/ru.json";
 
 declare module "i18next" {
   // Extend CustomTypeOptions

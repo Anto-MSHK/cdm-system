@@ -1,12 +1,7 @@
 import { Model } from "@models/Model";
 import { OperationType, RouteType } from "./_types";
 import { bodyParamsService } from "./services/bodyParamsService";
-import {
-  DELETE_METHOD,
-  GET_ALL_METHOD,
-  GET_ONE_METHOD,
-  defaultHandler,
-} from "./_constants";
+import { DELETE_METHOD, GET_ALL_METHOD, GET_ONE_METHOD } from "./_constants";
 import {
   GET_ALL,
   GET_ONE,
@@ -16,7 +11,6 @@ import {
 } from "@decorators/routes/_constants";
 import { getDefaultBodyFields } from "./utils/getDefaultBodyFields";
 import { dev_route } from "./dev/route";
-import { getModels } from "sequelize-typescript";
 import { getPath } from "./utils/getPath";
 
 export function RoutesConfigurator(models: Model[]): any {
@@ -64,16 +58,17 @@ export function RoutesConfigurator(models: Model[]): any {
       if (endPoint.param)
         operations[endPoint.method].fields.push(endPoint.param);
 
-      operations[endPoint.method].handler = defaultHandler;
-
       operations[endPoint.method].path = getPath(
         modelName,
         operations[endPoint.method]
       );
+
+      operations[endPoint.method].handler = endPoint.handler;
     }
 
     routes.push({
       routeName: modelName,
+      modelName: modelConfig.modelName as string,
       operations,
     });
   });

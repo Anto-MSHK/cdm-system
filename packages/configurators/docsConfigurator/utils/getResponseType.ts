@@ -1,4 +1,4 @@
-import translate from "packages/i18next";
+import translate from "packages/i18n/i18next";
 import { SwaggerDocsConfig, SwaggerMethod } from "../_types";
 
 const schemaWith = {

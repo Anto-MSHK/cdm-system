@@ -11,7 +11,7 @@ import {
 import { fieldParametersForSequelize } from "@configurators/databaseConfigurator/utils/fieldParametersForSequelize";
 import { MethodsType } from "@decorators/routes/_constants";
 import { swaggerFieldTypes } from "../_constants";
-import translate from "packages/i18next";
+import translate from "packages/i18n/i18next";
 
 export function definitionsService(
   models: {
