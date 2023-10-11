@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { ErrorType } from "../../configurators/routesConfigurator/_types";
 import { ServerConfig } from "../../server/index";
 import { HandlerType } from "packages/handlers/_types";
+import translate from "../../i18n/i18next";
 import _ from "lodash";
 
 export const contextFor =
@@ -34,6 +35,6 @@ export const contextFor =
       })(req as any, res as any);
     else
       return res.status(500).send({
-        message: "Unknown error",
+        message: translate("unknown"),
       } as ErrorType);
   };

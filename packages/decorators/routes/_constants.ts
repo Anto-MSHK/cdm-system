@@ -12,6 +12,7 @@ import { v4 as uuidv4 } from "uuid";
 import { getAllHandler } from "packages/handlers/getAllHandler";
 import { defaultHandler } from "packages/handlers/defaultHandler";
 import { getOneHandler } from "packages/handlers/getOneHandler";
+import { createHandler } from "packages/handlers/createHandler";
 // ключ для сохранения конфигурации роутов
 export const ROUTES_CONFIG_KEY = "models:routesConfig";
 
@@ -55,7 +56,7 @@ export function CREATE<T>(body?: (keyof T)[]): MethodType<T> {
     id: uuidv4(),
     method: CREATE_METHOD,
     body: body as string[],
-    handler: defaultHandler,
+    handler: createHandler,
   };
 }
 /**
