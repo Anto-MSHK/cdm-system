@@ -13,6 +13,8 @@ import { getAllHandler } from "packages/handlers/getAllHandler";
 import { defaultHandler } from "packages/handlers/defaultHandler";
 import { getOneHandler } from "packages/handlers/getOneHandler";
 import { createHandler } from "packages/handlers/createHandler";
+import { updateHandler } from "packages/handlers/updateHandler";
+import { deleteHandler } from "packages/handlers/deleteHandler";
 // ключ для сохранения конфигурации роутов
 export const ROUTES_CONFIG_KEY = "models:routesConfig";
 
@@ -75,7 +77,7 @@ export function UPDATE<T>(body?: (keyof T)[]): MethodType<T> {
       required: true,
     },
     body: body as string[],
-    handler: defaultHandler,
+    handler: updateHandler,
   };
 }
 /**
@@ -92,6 +94,6 @@ export function DELETE(): MethodType<any> {
       input: "path",
       required: true,
     },
-    handler: defaultHandler,
+    handler: deleteHandler,
   };
 }

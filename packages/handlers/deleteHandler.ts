@@ -7,18 +7,22 @@ import { matchedData } from "express-validator";
 /**
  * Обработчик запроса на получение всех данных сущности
  */
-export const createHandler: HandlerType = (context) => async (req, res) => {
-  const body = matchedData(req, {
+export const deleteHandler: HandlerType = (context) => async (req, res) => {
+  const { id } = matchedData(req, {
     includeOptionals: true,
-    locations: ["body"],
+    locations: ["params"],
   });
   const curModel = context?.curModel?.modelName as string;
   try {
-    const content = await context.db.models[curModel].create({
-      id: uuidv4(),
-      ...body,
+    const candidate = await context.db.models[curModel].findOne({
+      where: { id },
     });
-    return res.send(content);
+    if (!candidate)
+      return res.status(404).send({
+        message: translate("not-found-record", { model: curModel }),
+      } as ErrorType);
+    await candidate?.destroy();
+    return res.send(id);
   } catch (error) {
     logger.error(error);
     return res.status(500).send({
