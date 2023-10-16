@@ -23,25 +23,26 @@ export function StartServer(config: ServerConfig) {
   bindingHandlers(app, config);
 
   let swaggerConfig = undefined;
-  try {
-    if (fs.existsSync(DOCS_FILE_PATH)) {
-      const fileData = fs.readFileSync(DOCS_FILE_PATH, "utf8");
-      try {
-        swaggerConfig = JSON.parse(fileData);
-        if (swaggerConfig) {
-          app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerConfig));
-          logger.info("Docs - Is deployed");
-        } else {
-          logger.warn("Docs - Not deployed");
-        }
-      } catch (parseError) {
-        logger.warn("Docs - The documentation file is corrupted");
+
+  if (fs.existsSync(DOCS_FILE_PATH)) {
+    const fileData = fs.readFileSync(DOCS_FILE_PATH, "utf8");
+    try {
+      swaggerConfig = JSON.parse(fileData);
+      if (swaggerConfig) {
+        app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerConfig));
+        logger.info("Docs - Is deployed");
+      } else {
+        logger.warn("Docs - Not deployed");
       }
+    } catch (parseError) {
+      logger.warn("Docs - The documentation file is corrupted");
     }
-  } catch (err) {}
+  } else {
+    logger.warn("Docs - The documentation file is missing");
+  }
 
   config.db.sequelize
-    .sync({ force: true })
+    .sync({ force: JSON.parse(process.argv[2]) })
     .then(() => {
       logger.info("DB launch - completed");
     })
