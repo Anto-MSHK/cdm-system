@@ -6,6 +6,8 @@ import swaggerUi from "swagger-ui-express";
 import { DOCS_FILE_PATH } from "@configurators/docsConfigurator/utils/saveConfigToFile";
 import { RouteType } from "@configurators/routesConfigurator/_types";
 import { bindingHandlers } from "../handlers/utils/bindingHandlers";
+import cors from "cors";
+
 export interface ServerConfig {
   port: number;
   db: DB;
@@ -15,6 +17,7 @@ export interface ServerConfig {
 export function StartServer(config: ServerConfig) {
   const app: Application = express();
   const port = config.port;
+  app.use(cors());
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   bindingHandlers(app, config);

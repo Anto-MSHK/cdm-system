@@ -13,7 +13,7 @@ import {
 } from "@decorators/routes/_constants";
 
 @ModelConfig()
-@RoutesConfig<Book>([GET_ALL(), GET_ONE()])
+@RoutesConfig<Book>([GET_ALL(), GET_ONE(), UPDATE(["title"])])
 class Book extends Model {
   @Field({ type: FieldType.STRING })
   title: string | undefined;
