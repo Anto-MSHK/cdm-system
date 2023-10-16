@@ -12,7 +12,7 @@ export const getModelByName: HandlerType = (context) => async (req, res) => {
     return { name: key, model: context.db.models[key] };
   });
   const allModelRoutes = context.allRoutes.find((r) =>
-    r.routeName.includes(name)
+    r.routeName.includes(name.toLowerCase())
   );
   const foundModel = models.find(
     (m) => m.name.toLowerCase() === name.toLowerCase()
