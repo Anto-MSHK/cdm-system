@@ -1,6 +1,7 @@
 import { fieldParametersForSequelize } from "@configurators/databaseConfigurator/utils/fieldParametersForSequelize";
 import { ErrorType } from "@configurators/routesConfigurator/_types";
 import { HandlerType } from "packages/handlers/_types";
+import translate from "./../../i18n/i18next";
 
 /**
  * Обработчик запроса на получение информации о модели и её роутах
@@ -17,9 +18,9 @@ export const getModelByName: HandlerType = (context) => async (req, res) => {
     (m) => m.name.toLowerCase() === name.toLowerCase()
   );
   if (!foundModel)
-    return res
-      .status(404)
-      .send({ message: `Model "${name}" not found` } as ErrorType);
+    return res.status(404).send({
+      message: translate("not-found-model", { model: name }),
+    } as ErrorType);
   else
     return res.send({
       modelName: foundModel.name,
@@ -27,5 +28,6 @@ export const getModelByName: HandlerType = (context) => async (req, res) => {
         Object.values((foundModel.model as any).tableAttributes)
       ),
       routs: allModelRoutes,
+      count: await foundModel.model.count(),
     });
 };
