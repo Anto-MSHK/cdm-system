@@ -5,9 +5,9 @@ import { HasMany } from "@decorators/models/relationships/hasMany";
 import { Scope } from "src/Scope";
 import { Model } from "@models/Model";
 
-@ModelConfig()
+@ModelConfig({ modelLabel: "Группы книг" })
 export class Group extends Model {
-  @Field({ type: FieldType.STRING })
+  @Field({ type: FieldType.STRING, label: "Название" })
   name: string | undefined;
   @HasMany({ model: Scope.Book })
   books: string | undefined;

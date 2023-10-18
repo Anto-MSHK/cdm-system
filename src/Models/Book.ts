@@ -12,10 +12,10 @@ import {
   UPDATE,
 } from "@decorators/routes/_constants";
 
-@ModelConfig()
+@ModelConfig({ modelLabel: "Книги" })
 @RoutesConfig<Book>([GET_ALL(), GET_ONE(), UPDATE(["title"])])
 class Book extends Model {
-  @Field({ type: FieldType.STRING })
+  @Field({ type: FieldType.STRING, label: "Название" })
   title: string | undefined;
 
   @HasOne({ model: Scope.Author })

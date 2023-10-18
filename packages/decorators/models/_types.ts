@@ -12,6 +12,7 @@ export interface EntityConfig {
 
 export interface ModelConfig {
   modelName?: string;
+  modelLabel?: string;
 }
 
 export enum FieldType {
@@ -30,6 +31,7 @@ type FieldDefaultValueType = {
 
 export interface FieldConfig {
   type: FieldType;
+  label?: string;
   required?: boolean;
   unique?: boolean;
   defaultValue?: FieldDefaultValueType[FieldType];

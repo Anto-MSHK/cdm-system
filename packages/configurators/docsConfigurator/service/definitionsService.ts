@@ -8,7 +8,7 @@ import {
   SwaggerParam,
   SwaggerPropertiesDefinition,
 } from "../_types";
-import { fieldParametersForSequelize } from "@configurators/databaseConfigurator/utils/fieldParametersForSequelize";
+import { usefulFieldsFromSequelize } from "@configurators/databaseConfigurator/utils/usefulFieldsFromSequelize";
 import { MethodsType } from "@decorators/routes/_constants";
 import { swaggerFieldTypes } from "../_constants";
 import translate from "packages/i18n/i18next";
@@ -22,7 +22,7 @@ export function definitionsService(
   const swaggerDefinitions: SwaggerDefinitions = {};
   for (const model in models) {
     let curModel = models[model];
-    const allField = fieldParametersForSequelize(
+    const allField = usefulFieldsFromSequelize(
       Object.values((curModel as any).tableAttributes)
     );
     const properties: { [key: string]: SwaggerPropertiesDefinition } = {};

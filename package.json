@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc --project tsconfig.json",
     "start:new": "npm run build && node -r tsconfig-paths/register -r ts-node/register ./build/index.js true",
-    "start": "node -r tsconfig-paths/register -r ts-node/register ./build/index.js false"
+    "start": "npm run build && node -r tsconfig-paths/register -r ts-node/register ./build/index.js false"
   },
   "type": "commonjs",
   "author": "",

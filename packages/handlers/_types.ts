@@ -7,7 +7,7 @@ import { Request, Response } from "express";
 
 interface HandlerParams {
   curRoute: { routeName: string; operation: OperationItemType };
-  curModel?: { modelName: string };
+  curModel?: { modelName: string; modelLabel?: string };
   db: DB;
   allRoutes: RouteType[];
 }

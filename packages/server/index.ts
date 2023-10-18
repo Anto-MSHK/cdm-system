@@ -7,6 +7,7 @@ import { DOCS_FILE_PATH } from "@configurators/docsConfigurator/utils/saveConfig
 import { RouteType } from "@configurators/routesConfigurator/_types";
 import { bindingHandlers } from "../handlers/utils/bindingHandlers";
 import cors from "cors";
+import { Model } from "@models/Model";
 
 export interface ServerConfig {
   port: number;

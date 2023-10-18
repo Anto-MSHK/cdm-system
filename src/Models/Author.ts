@@ -5,9 +5,9 @@ import { Scope } from "src/Scope";
 import { Model } from "@models/Model";
 import { HasMany } from "@decorators/models/relationships/hasMany";
 
-@ModelConfig()
+@ModelConfig({ modelLabel: "Авторы" })
 export class Author extends Model {
-  @Field({ type: FieldType.STRING })
+  @Field({ type: FieldType.STRING, label: "Имя" })
   name: string | undefined;
 }
 

@@ -1,4 +1,4 @@
-import { fieldParametersForSequelize } from "@configurators/databaseConfigurator/utils/fieldParametersForSequelize";
+import { usefulFieldsFromSequelize } from "@configurators/databaseConfigurator/utils/usefulFieldsFromSequelize";
 import { ErrorType } from "@configurators/routesConfigurator/_types";
 import { HandlerType } from "packages/handlers/_types";
 import translate from "./../../i18n/i18next";
@@ -17,6 +17,10 @@ export const getModelByName: HandlerType = (context) => async (req, res) => {
   const foundModel = models.find(
     (m) => m.name.toLowerCase() === name.toLowerCase()
   );
+  const cdmModels = context.db.cdmModels;
+  const curCdmModel = cdmModels.find(
+    (cm) => cm._getConfig().modelName === foundModel?.name
+  );
   if (!foundModel)
     return res.status(404).send({
       message: translate("not-found-model", { model: name }),
@@ -24,8 +28,10 @@ export const getModelByName: HandlerType = (context) => async (req, res) => {
   else
     return res.send({
       modelName: foundModel.name,
-      fields: fieldParametersForSequelize(
-        Object.values((foundModel.model as any).tableAttributes)
+      modelLabel: curCdmModel?._getConfig().modelLabel,
+      fields: usefulFieldsFromSequelize(
+        Object.values((foundModel.model as any).tableAttributes),
+        curCdmModel?._getModelParams().fields as any
       ),
       routs: allModelRoutes,
       count: await foundModel.model.count(),

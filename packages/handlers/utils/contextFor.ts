@@ -22,6 +22,10 @@ export const contextFor =
         curModel = route.modelName;
       }
     });
+    const curCdmModel = config.db.cdmModels.find(
+      (m) => m._getConfig().modelName === curModel
+    );
+    const curModelConfig = curCdmModel?._getConfig();
     if (curEndpoint && curRoute)
       return handler({
         db: config.db,
@@ -29,6 +33,9 @@ export const contextFor =
         curModel: curModel
           ? {
               modelName: curModel,
+              modelLabel: curModelConfig
+                ? curModelConfig.modelLabel
+                : undefined,
             }
           : undefined,
         allRoutes: config.routes,
