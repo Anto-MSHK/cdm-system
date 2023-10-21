@@ -50,6 +50,8 @@ export function routesService(routes: RouteType[]) {
               description: translate("type-ref") + field.type,
               required: field.required,
               in: field.input,
+              minimum: field.min,
+              maximum: field.max,
             };
           else return undefined;
         })

@@ -12,7 +12,7 @@ export function bodyParamsService(
     if (paramets.includes(key))
       operation.push({
         name: key,
-        validator: typeValidator("body", key, field.type, field.required),
+        validator: typeValidator("body", key, field),
         input: "body",
         ...field,
       });

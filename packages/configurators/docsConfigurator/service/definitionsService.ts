@@ -8,10 +8,15 @@ import {
   SwaggerParam,
   SwaggerPropertiesDefinition,
 } from "../_types";
-import { usefulFieldsFromSequelize } from "@configurators/databaseConfigurator/utils/usefulFieldsFromSequelize";
+import {
+  EditTableParams,
+  usefulFieldsFromSequelize,
+} from "@configurators/databaseConfigurator/utils/usefulFieldsFromSequelize";
 import { MethodsType } from "@decorators/routes/_constants";
 import { swaggerFieldTypes } from "../_constants";
 import translate from "packages/i18n/i18next";
+import { capitalizeFirstLetter } from "packages/utils/capitalizeFirstLetter/capitalizeFirstLetter";
+import { getDocsFields } from "@configurators/databaseConfigurator/utils/getDocsFields";
 
 export function definitionsService(
   models: {
@@ -28,13 +33,10 @@ export function definitionsService(
     const properties: { [key: string]: SwaggerPropertiesDefinition } = {};
     const required: string[] = [];
     allField.forEach((f) => {
-      properties[f.fieldName] = {
-        type: swaggerFieldTypes[f.type.toLocaleLowerCase()],
-        description: translate("type-ref") + f.type,
-      };
+      properties[f.fieldName] = getDocsFields(f);
       if (!f.allowNull) required.push(f.fieldName);
     });
-    swaggerDefinitions[model] = {
+    swaggerDefinitions[capitalizeFirstLetter(model)] = {
       type: "object",
       properties,
       required,
@@ -55,11 +57,9 @@ export function definitionsService(
           }),
         };
         curOper.fields.forEach((f) => {
-          if (f.input === "body" && f.type)
-            swaggerDefinitions[name].properties[f.name] = {
-              type: swaggerFieldTypes[f.type],
-              description: translate("type-ref") + f.type,
-            };
+          if (f.input === "body" && f.type) {
+            swaggerDefinitions[name].properties[f.name] = getDocsFields(f);
+          }
         });
       }
     }

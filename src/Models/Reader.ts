@@ -1,13 +1,12 @@
 import { ModelConfig } from "@decorators/models/modelConfig/modelConfig";
 import { Field } from "@decorators/models/field/field";
-import { FieldType } from "@decorators/models/_types";
+import { FieldType, R_CUSTOM, R_EMAIL } from "@decorators/models/_types";
 import { Scope } from "src/Scope";
 import { Model } from "@models/Model";
 import { HasMany } from "@decorators/models/relationships/hasMany";
-import { HasOne } from "@decorators/models/relationships/hasOne";
 
-@ModelConfig({ modelLabel: "Авторы" })
-export class Author extends Model {
+@ModelConfig({ modelLabel: "Читатели" })
+export class Reader extends Model {
   @Field({ type: FieldType.STRING, label: "Имя" })
   first_name: string | undefined;
 
@@ -17,11 +16,18 @@ export class Author extends Model {
   @Field({ type: FieldType.DATE, label: "Дата рождения" })
   birth: string | undefined;
 
-  @HasOne({ model: Scope.Biography })
-  biography: any;
+  @Field({ type: FieldType.STRING, label: "Адрес" })
+  address: string | undefined;
 
-  @HasMany({ model: Scope.Book })
-  books: any;
+  @Field({ type: FieldType.STRING, label: "Почта", regex: R_EMAIL })
+  email: string | undefined;
+
+  @Field({
+    type: FieldType.STRING,
+    label: "Номер телефона",
+    regex: R_CUSTOM(/(?:\+|\d)[\d\-\(\) ]{9,}\d/),
+  })
+  phone_number: string | undefined;
 }
 
-export default new Author();
+export default new Reader();

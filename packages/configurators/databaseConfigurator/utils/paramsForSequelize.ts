@@ -11,8 +11,9 @@ import {
 const TYPE_TABLE = {
   [FieldType.UUID]: DataTypes.UUID,
   [FieldType.STRING]: DataTypes.STRING,
-  [FieldType.NUMBER]: DataTypes.NUMBER,
+  [FieldType.NUMBER]: DataTypes.INTEGER,
   [FieldType.BOOLEAN]: DataTypes.BOOLEAN,
+  [FieldType.DATE]: DataTypes.DATE,
 };
 
 interface SequelizeModelParams {

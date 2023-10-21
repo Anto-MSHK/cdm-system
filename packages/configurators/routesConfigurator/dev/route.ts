@@ -22,7 +22,10 @@ export const dev_route: RouteType = {
         {
           input: "path",
           name: "name",
-          validator: typeValidator("path", "name", FieldType.STRING, true),
+          validator: typeValidator("path", "name", {
+            type: FieldType.STRING,
+            required: true,
+          }),
           required: true,
           type: FieldType.STRING,
         },

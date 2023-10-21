@@ -12,6 +12,7 @@ export const swaggerFieldTypes: { [key: string]: SwaggerParam["type"] } = {
   string: "string",
   number: "number",
   date: "string",
+  integer: "number",
 };
 export const swaggerDescWithMethod: { [key: string]: any } = {
   [GET_ALL_METHOD as string]: "get-all",

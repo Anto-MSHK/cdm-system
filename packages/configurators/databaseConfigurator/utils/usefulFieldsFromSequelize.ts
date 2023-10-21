@@ -1,4 +1,4 @@
-import { FieldConfig, FieldType } from "@decorators/models/_types";
+import { FieldConfig, FieldType, RegexType } from "@decorators/models/_types";
 import { Model } from "@models/Model";
 import { Field } from "../../../decorators/models/field/field";
 
@@ -19,7 +19,7 @@ export type SequelizeTableParams = {
   };
 };
 
-type EditTableParams = {
+export type EditTableParams = {
   type: FieldType;
   primaryKey: boolean;
   allowNull: boolean;
@@ -29,6 +29,11 @@ type EditTableParams = {
     model: string;
     key: string;
   };
+  label?: string;
+  regex?: RegexType;
+  min?: number;
+  max?: number;
+  enum?: string[];
 };
 
 export function usefulFieldsFromSequelize(
@@ -48,6 +53,10 @@ export function usefulFieldsFromSequelize(
       allowNull: f.allowNull,
       references: f.references,
       label: otherConfig?.label,
+      regex: otherConfig?.regex,
+      min: otherConfig?.min,
+      max: otherConfig?.max,
+      enum: otherConfig?.enum,
     };
   });
 

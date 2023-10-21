@@ -1,5 +1,12 @@
 export enum Scope {
   Book,
-  Group,
   Author,
+  Reader,
+  Loan,
+  Genre,
+  Location,
+  Language,
+  Publisher,
+  BookReview,
+  Biography,
 }

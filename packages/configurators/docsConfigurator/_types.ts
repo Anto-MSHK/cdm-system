@@ -46,8 +46,12 @@ type SwaggerPath = {
 
 type SwaggerPropertiesDefinition = {
   type: SwaggerParam["type"];
+  summary?: string;
   description?: string;
   example?: string;
+  minimum?: number;
+  maximum?: number;
+  enum?: string[];
   $ref?: string;
 };
 type SwaggerDefinitions = {

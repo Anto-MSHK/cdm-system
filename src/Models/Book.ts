@@ -11,15 +11,31 @@ import {
   GET_ONE,
   UPDATE,
 } from "@decorators/routes/_constants";
+import { HasMany } from "@decorators/models/relationships/hasMany";
+import Genre from "./Genre";
+import Publisher from "./Publisher";
 
 @ModelConfig({ modelLabel: "Книги" })
-@RoutesConfig<Book>([GET_ALL(), GET_ONE(), UPDATE(["title"])])
 class Book extends Model {
   @Field({ type: FieldType.STRING, label: "Название" })
   title: string | undefined;
 
-  @HasOne({ model: Scope.Author })
-  author: string | undefined;
-}
+  @Field({ type: FieldType.STRING, label: "Международный номер книги" })
+  ISBN: string | undefined;
 
+  @HasMany({ model: Scope.BookReview })
+  reviews: any;
+
+  @HasOne({ model: Scope.Genre })
+  genre: any;
+
+  @HasOne({ model: Scope.Publisher })
+  publisher: any;
+
+  @HasOne({ model: Scope.Language })
+  language: any;
+
+  @HasOne({ model: Scope.Location })
+  location: any;
+}
 export default new Book();
