@@ -45,7 +45,8 @@ export function RoutesConfigurator(models: Model[]): any {
         bodyParamsService(
           modelParams,
           operations[endPoint.method].fields,
-          endPoint.body
+          endPoint.body,
+          endPoint.method
         );
       }
       // добавление query параметров (если есть)

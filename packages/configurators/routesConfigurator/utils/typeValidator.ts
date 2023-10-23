@@ -32,6 +32,7 @@ export const typeValidator = (
     [typeValid[field.type] as "isString"]()
     .withMessage(typeValid[field.type]);
   if (field?.required) validObj.notEmpty();
+  else validObj.optional();
   if (field?.regex) {
     if (field.regex.name !== "custom")
       validObj[field.regex.name as "isString"]();

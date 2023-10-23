@@ -5,6 +5,7 @@ import { getPath } from "@configurators/routesConfigurator/utils/getPath";
 import { MethodsType } from "@decorators/routes/_constants";
 import express from "express";
 import { validationResult, ValidationChain } from "express-validator";
+import { UPDATE_METHOD } from "@configurators/routesConfigurator/_constants";
 
 const validate = (validations: ValidationChain[]) => {
   return async (
