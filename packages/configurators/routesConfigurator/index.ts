@@ -12,12 +12,20 @@ import {
 import { getDefaultBodyFields } from "./utils/getDefaultBodyFields";
 import { dev_route } from "./dev/route";
 import { getPath } from "./utils/getPath";
+import { ModelCtor } from "sequelize-typescript";
+import { relationsParamsService } from "./services/relationsParamsService";
 
-export function RoutesConfigurator(models: Model[]): any {
+export function RoutesConfigurator(
+  models: Model[],
+  dbModels: {
+    [key: string]: ModelCtor;
+  }
+): any {
   const routes: RouteType[] = [];
   models.forEach((model) => {
     const modelConfig = model._getConfig(); // конфигурация модели
     const modelParams = model._getModelParams(); // параметры модели и все её связи
+    const dbModelParams = dbModels[modelConfig.modelName as string]; // параметры модели и все её связи
     const modelEndPoints = model._getRoutes() || [
       DELETE(),
       UPDATE(),
@@ -46,6 +54,11 @@ export function RoutesConfigurator(models: Model[]): any {
           modelParams,
           operations[endPoint.method].fields,
           endPoint.body,
+          endPoint.method
+        );
+        relationsParamsService(
+          dbModelParams,
+          operations[endPoint.method].fields,
           endPoint.method
         );
       }
