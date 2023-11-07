@@ -7,7 +7,7 @@ import { HasMany } from "@decorators/models/relationships/hasMany";
 
 @ModelConfig({ modelLabel: "Языки" })
 export class Language extends Model {
-  @Field({ type: FieldType.STRING, label: "Название" })
+  @Field({ type: FieldType.STRING, label: "Название", isMainlabel: true })
   language: string | undefined;
 }
 

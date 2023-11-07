@@ -6,6 +6,7 @@ import {
   CREATE_METHOD,
   UPDATE_METHOD,
   DELETE_METHOD,
+  GET_RELATION_METHOD,
 } from "./../../configurators/routesConfigurator/_constants";
 import { HandlerType } from "packages/handlers/_types";
 
@@ -15,7 +16,8 @@ export type MethodType<T = { [key: string]: any }> = {
     | typeof GET_ALL_METHOD
     | typeof CREATE_METHOD
     | typeof UPDATE_METHOD
-    | typeof DELETE_METHOD;
+    | typeof DELETE_METHOD
+    | typeof GET_RELATION_METHOD;
   additionalPath?: string; // дополнительная приставка к основному адресу
   // пример: основной адрес - /book/
   // дополнительная приставка - add-author

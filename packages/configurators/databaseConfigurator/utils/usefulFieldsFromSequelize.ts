@@ -46,17 +46,9 @@ export function usefulFieldsFromSequelize(
     let otherConfig: FieldConfig | undefined = undefined;
     if (fieldsCdm) otherConfig = fieldsCdm[f.fieldName];
     return {
-      primaryKey: f.primaryKey,
-      fieldName: f.fieldName,
+      ...f,
+      ...otherConfig,
       type: f.type.key,
-      unique: f.unique,
-      allowNull: f.allowNull,
-      references: f.references,
-      label: otherConfig?.label,
-      regex: otherConfig?.regex,
-      min: otherConfig?.min,
-      max: otherConfig?.max,
-      enum: otherConfig?.enum,
     };
   });
 

@@ -7,7 +7,7 @@ import { HasMany } from "@decorators/models/relationships/hasMany";
 
 @ModelConfig({ modelLabel: "Жанры" })
 export class Genre extends Model {
-  @Field({ type: FieldType.STRING, label: "Название" })
+  @Field({ type: FieldType.STRING, label: "Название", isMainlabel: true  })
   name: string | undefined;
 }
 

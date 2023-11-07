@@ -14,7 +14,13 @@ export class BookReview extends Model {
   @Field({ type: FieldType.DATE, label: "Дата" })
   date: string | undefined;
 
-  @Field({ type: FieldType.NUMBER, label: "Рейтинг", min: 0, max: 5 })
+  @Field({
+    type: FieldType.NUMBER,
+    label: "Рейтинг",
+    min: 0,
+    max: 5,
+    isMainlabel: true,
+  })
   rating: string | undefined;
 
   @HasOne({ model: Scope.Book })

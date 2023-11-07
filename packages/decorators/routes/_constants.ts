@@ -2,24 +2,26 @@ import {
   CREATE_METHOD,
   DELETE_METHOD,
   GET_ALL_METHOD,
-  GET_ONE_METHOD as GET_ONE_METHOD,
+  GET_ONE_METHOD,
   UPDATE_METHOD,
+  GET_RELATION_METHOD,
 } from "@configurators/routesConfigurator/_constants";
 import { typeValidator } from "@configurators/routesConfigurator/utils/typeValidator";
 import { MethodType } from "./_types";
 import { FieldType } from "@decorators/models/_types";
 import { v4 as uuidv4 } from "uuid";
 import { getAllHandler } from "packages/handlers/getAllHandler";
-import { defaultHandler } from "packages/handlers/defaultHandler";
 import { getOneHandler } from "packages/handlers/getOneHandler";
 import { createHandler } from "packages/handlers/createHandler";
 import { updateHandler } from "packages/handlers/updateHandler";
 import { deleteHandler } from "packages/handlers/deleteHandler";
+import { getRelationsHandler } from "packages/handlers/getRelationsHandler";
 // ключ для сохранения конфигурации роутов
 export const ROUTES_CONFIG_KEY = "models:routesConfig";
 
 export const MethodsType = {
   [GET_ALL_METHOD as string]: "get",
+  [GET_RELATION_METHOD as string]: "get",
   [GET_ONE_METHOD as string]: "get",
   [UPDATE_METHOD as string]: "put",
   [CREATE_METHOD as string]: "post",
@@ -47,6 +49,24 @@ export function GET_ONE(): MethodType<any> {
       required: true,
     },
     handler: getOneHandler,
+  };
+}
+/**
+ * Функция конфигурации запроса на получение записей связанной сущности (по имени)
+ */
+export function GET_RELATION(): MethodType<any> {
+  return {
+    id: uuidv4(),
+    method: GET_RELATION_METHOD,
+    param: {
+      name: "name",
+      type: FieldType.STRING,
+      validator: typeValidator("path", "name", { type: FieldType.STRING }),
+      input: "path",
+      required: true,
+    },
+    handler: getRelationsHandler,
+    additionalPath: "relations",
   };
 }
 /**

@@ -1,13 +1,19 @@
 import { Model } from "@models/Model";
 import { OperationType, RouteType } from "./_types";
 import { bodyParamsService } from "./services/bodyParamsService";
-import { DELETE_METHOD, GET_ALL_METHOD, GET_ONE_METHOD } from "./_constants";
+import {
+  DELETE_METHOD,
+  GET_ALL_METHOD,
+  GET_ONE_METHOD,
+  GET_RELATION_METHOD,
+} from "./_constants";
 import {
   GET_ALL,
   GET_ONE,
   CREATE,
   UPDATE,
   DELETE,
+  GET_RELATION,
 } from "@decorators/routes/_constants";
 import { getDefaultBodyFields } from "./utils/getDefaultBodyFields";
 import { dev_route } from "./dev/route";
@@ -31,6 +37,7 @@ export function RoutesConfigurator(
       UPDATE(),
       CREATE(),
       GET_ONE(),
+      GET_RELATION(),
       GET_ALL(),
     ]; // все endpoints модели
     let operations: OperationType = {};
@@ -45,6 +52,7 @@ export function RoutesConfigurator(
       if (
         endPoint.method !== GET_ONE_METHOD &&
         endPoint.method !== GET_ALL_METHOD &&
+        endPoint.method !== GET_RELATION_METHOD &&
         endPoint.method !== DELETE_METHOD
       ) {
         // если метод требует body параметры

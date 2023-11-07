@@ -10,7 +10,7 @@ export class Reader extends Model {
   @Field({ type: FieldType.STRING, label: "Имя" })
   first_name: string | undefined;
 
-  @Field({ type: FieldType.STRING, label: "Фамилия" })
+  @Field({ type: FieldType.STRING, label: "Фамилия", isMainlabel: true })
   last_name: string | undefined;
 
   @Field({ type: FieldType.DATE, label: "Дата рождения" })

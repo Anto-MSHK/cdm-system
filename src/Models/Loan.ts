@@ -9,7 +9,7 @@ import BookReview from "./BookReview";
 
 @ModelConfig({ modelLabel: "Выдача книг" })
 export class Loan extends Model {
-  @Field({ type: FieldType.DATE, label: "Выдана" })
+  @Field({ type: FieldType.DATE, label: "Выдана", isMainlabel: true })
   loan: string | undefined;
 
   @Field({ type: FieldType.DATE, label: "Возврат" })

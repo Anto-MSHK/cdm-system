@@ -6,7 +6,7 @@ export function bodyParamsService(
   modelParams: ModelParams,
   operation: FieldInRoute[],
   paramets: string[],
-  method: "operation:update" | "operation:create"
+  method: "operation:update" | "operation:create" 
 ) {
   for (const key in modelParams.fields) {
     let field = modelParams.fields[key];

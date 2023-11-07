@@ -25,7 +25,15 @@ export const updateHandler: HandlerType = (context) => async (req, res) => {
       return res.status(404).send({
         message: translate("not-found-record", { model: curModel }),
       } as ErrorType);
-    await candidate?.update(body);
+
+    await Promise.all(
+      Object.entries(body).map(async (param) => {
+        if (param[1] === "00000000-0000-0000-0000-000000000000") {
+          await candidate?.update({ [param[0]]: null });
+        } else await candidate?.update({ [param[0]]: param[1] });
+      })
+    );
+
     await candidate.reload();
     return res.send(candidate);
   } catch (error) {

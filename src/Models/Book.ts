@@ -17,7 +17,7 @@ import Publisher from "./Publisher";
 
 @ModelConfig({ modelLabel: "Книги" })
 class Book extends Model {
-  @Field({ type: FieldType.STRING, label: "Название" })
+  @Field({ type: FieldType.STRING, label: "Название", isMainlabel: true })
   title: string | undefined;
 
   @Field({ type: FieldType.STRING, label: "Международный номер книги" })

@@ -7,7 +7,7 @@ import { HasMany } from "@decorators/models/relationships/hasMany";
 
 @ModelConfig({ modelLabel: "Местонахождение" })
 export class Location extends Model {
-  @Field({ type: FieldType.STRING, label: "Комната" })
+  @Field({ type: FieldType.STRING, label: "Комната", isMainlabel: true })
   room: string | undefined;
   @Field({ type: FieldType.STRING, label: "Стеллаж" })
   rack: string | undefined;

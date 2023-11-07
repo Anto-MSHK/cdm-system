@@ -34,6 +34,7 @@ type FieldDefaultValueType = {
 
 export interface FieldConfig {
   type: FieldType;
+  isMainlabel?: boolean;
   enum?: string[];
   label?: string;
   required?: boolean;
