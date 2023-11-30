@@ -10,21 +10,24 @@
 Краткое описание:
 
 - `configurators` - папка; содержит конфигураторы различных частей приложения (создание БД, генерация роутов и документации и т.д.);
-
 - `decorators` - папка; содержит функции-декораторы для описания моделей; используются пользователем системы;
-
+- `handlers` - папка; содержит функции-обработчики конечных точек;
+- `i18n` - папка; содержит файлы для локализованных надписей в приложении;
 - `models` - папка; содержит информацию о моделях;
-
 - `server` - папка; содержит функции для разворачивания сервера;
-
+- `utils` - папка; содержит какие-то полезные функции для всего проекта;
 - `logger` - файл; вывод информации об операциях и ошибках;
 
 ## Конфигураторы
 
 Главный конфигуратор приложения - [AppConfigurator](./packages/configurators/index.ts). Он регулирует работу остальных и объединяет их.
 
-- `DatabaseConfigurator` - отвечает за формирование параметров для создания БД;
+### `DatabaseConfigurator` - формирование параметров для создания БД
 
-- `RoutesConfigurator` - отвечает за формирование endpoints и их параметров;
+В [DatabaseConfigurator](./packages/configurators/databaseConfigurator/index.ts) создаётся экземпляр класса `Sequelize`, который принимает в себя параметры переданные в `AppConfigurator`. Также, создаются модели и добавляются связи между ними, согласно с описанными пользователем конфигурациями.
 
-- `DocsConfigurator` - документирует endpoints из `RoutesConfigurator`
+### `RoutesConfigurator` - формирование endpoints и их параметров
+
+В [RoutesConfigurator](./packages/configurators/routesConfigurator/index.ts) создаются конечные точки и конфигурируются параметры для них. Стандартные конфигурации для конечных точек находятся в файле [./packages/decorators/routes/_constants.ts](./packages/decorators/routes/_constants.ts). 
+
+### `DocsConfigurator` - документация endpoints из `RoutesConfigurator`
