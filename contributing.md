@@ -41,4 +41,12 @@
 
 Каждому параметру, согласно с его типом, присваивается свой валидатор. Все типы описаны в [FieldType](./packages/decorators/models/_types.ts).
 
-### `DocsConfigurator` - документация endpoints из `RoutesConfigurator`
+По окончании формирования конечных точек, возвращается массив с путями по моделям - [RouteType](./packages/configurators/routesConfigurator/_types.ts).
+
+### `DocsConfigurator` - документация endpoints 
+
+Документация формируется через две функции, которые находятся в папке [./packages/configurators/docsConfigurator/service](.\packages\configurators\docsConfigurator\service).
+- `definitionsService` - формирует документацию для параметров моделей, парметров запросов и DTO.
+- `routesService` - формирует документацию для конечных точек, описывает их и привязывает нужные ссылки на DTO (ранее описанных в `definitionsService`)
+
+`DocsConfigurator` добавляет в папку [./packages/server](./packages/server) файл `swagger-docs.json`. В нём и хранится сформированная документация, которая потом открывается через библиотеку `swagger-ui`.
