@@ -1,6 +1,6 @@
 {
   "name": "cdm_system",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Customizable data management system",
   "main": "./index.ts",
   "scripts": {
