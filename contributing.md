@@ -30,4 +30,15 @@
 
 В [RoutesConfigurator](./packages/configurators/routesConfigurator/index.ts) создаются конечные точки и конфигурируются параметры для них. Стандартные конфигурации для конечных точек находятся в файле [./packages/decorators/routes/_constants.ts](./packages/decorators/routes/_constants.ts). 
 
+Существует следующие типы конечных точек:
+- `GET_ALL` - получить все записи;
+- `GET_ONE` - получить запись (по id);
+- `GET_RELATION` - получить записи модели (по имени), которая связана с другой моделью; например, получить все книги у автора;
+- `CREATE` - создать запись;
+- `UPDATE` - обновить запись (по id);
+- `DELETE` - удалить запись.
+Если пользователь не настроил конфигурацию с помощью декоратора `RoutesConfig`, то у каждой модели, по умолчанию, присутсвует каждый тип запроса.
+
+Каждому параметру, согласно с его типом, присваивается свой валидатор. Все типы описаны в [FieldType](./packages/decorators/models/_types.ts).
+
 ### `DocsConfigurator` - документация endpoints из `RoutesConfigurator`
